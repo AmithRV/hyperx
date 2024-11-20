@@ -8,7 +8,7 @@ import '@/styles/auth/style.css';
 import { useState } from 'react';
 import axios from 'axios';
 
-function Login() {
+function Signup() {
   const [loading, setLoading] = useState({ type: '', state: false });
   const validate = (data) => {
     const errors = {};
@@ -25,7 +25,7 @@ function Login() {
   const handleFormSubmit = () => {
     setLoading({ type: 'login', state: true });
     axios
-      .post('/api/auth/login', {
+      .post('/api/auth/signup', {
         userid: formik.values.userId,
         password: formik.values.password,
       })
@@ -49,10 +49,6 @@ function Login() {
     formik.handleSubmit();
   };
 
-  // useEffect(() => {
-  //   console.clear();
-  //   console.log('errors : ', formik.errors);
-  // }, [formik.errors]);
   return (
     <div className="auth_section_1">
       <form className="form_section" onSubmit={handleSubmit}>
@@ -95,4 +91,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
