@@ -2,9 +2,9 @@
 
 import { useFormik } from 'formik';
 
-import ErrorMessage from '../components/ui/form/ErrorMessage';
+import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
 
-import '../../styles/auth/style.css';
+import '@/styles/auth/style.css';
 
 function Login() {
   const validate = (data) => {
