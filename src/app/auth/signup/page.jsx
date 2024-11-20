@@ -1,5 +1,6 @@
 'use client';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import axios from 'axios';
@@ -8,6 +9,8 @@ import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
 import '@/styles/auth/style.css';
 
 function Signup() {
+  const router = useRouter();
+
   const [loading, setLoading] = useState({ type: '', state: false });
   const validate = (data) => {
     const errors = {};
@@ -22,7 +25,7 @@ function Signup() {
   };
 
   const handleFormSubmit = () => {
-    setLoading({ type: 'login', state: true });
+    setLoading({ type: 'signup', state: true });
     axios
       .post('/api/auth/signup', {
         userid: formik.values.userId,
@@ -30,6 +33,7 @@ function Signup() {
       })
       .then(() => {
         formik.resetForm();
+        router.push(`/login`);
       })
       .catch((error) => {
         if (error.response.status === 400) {
@@ -39,7 +43,7 @@ function Signup() {
         }
       })
       .finally(() => {
-        setLoading({ type: 'login', state: false });
+        setLoading({ type: 'signup', state: false });
       });
   };
 

@@ -1,5 +1,6 @@
 'use client';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import axios from 'axios';
@@ -8,6 +9,8 @@ import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
 import '@/styles/auth/style.css';
 
 function Login() {
+  const router = useRouter();
+
   const [loading, setLoading] = useState({ type: '', state: false });
   const validate = (data) => {
     const errors = {};
@@ -30,6 +33,7 @@ function Login() {
       })
       .then(() => {
         formik.resetForm();
+        router.push(`/dashboard`);
       })
       .catch((error) => {
         if (error.response.status === 400) {
