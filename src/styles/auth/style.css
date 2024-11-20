@@ -20,7 +20,13 @@ input:focus {
     border: none
 }
 
-
+input::placeholder {
+    color: #888 !important;
+    font-style: italic;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    opacity: 0.5 !important;
+}
 
 @media (max-width: 767px) {
     .form_section {
