@@ -1,9 +1,10 @@
 import React from 'react';
 import Example from './Component';
+import '../../styles/auth/style.css';
 
 function page() {
   return (
-    <div>
+    <div className="auth_section_1">
       <Example />
     </div>
   );

@@ -1,0 +1,29 @@
+.auth_section_1 {
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_section {
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    width: 30%;
+    height: 43%;
+    border-radius: 18px;
+}
+
+input:focus {
+    outline: none;
+    border: none
+}
+
+@media (max-width: 767px) {
+    .form_section {
+        width: 90%;
+        height: 300px;
+    }
+}
