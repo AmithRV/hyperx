@@ -33,6 +33,10 @@ function Login() {
     formik.handleSubmit();
   };
 
+  // useEffect(() => {
+  //   console.clear();
+  //   console.log('errors : ', formik.errors);
+  // }, [formik.errors]);
   return (
     <div className="auth_section_1">
       <form className="form_section" onSubmit={handleSubmit}>
@@ -44,7 +48,11 @@ function Login() {
             name="userId"
             onChange={formik.handleChange}
           />
-          <ErrorMessage message={formik.errors.userId} />
+          <ErrorMessage
+            message={formik.errors.userId}
+            name="userId"
+            formik={formik}
+          />
         </div>
         <div className="form-group mx-4 mt-4 mb-3">
           <label htmlFor="exampleInputPassword1">Password</label>
@@ -54,7 +62,11 @@ function Login() {
             name="password"
             onChange={formik.handleChange}
           />
-          <ErrorMessage message={formik.errors.password} />
+          <ErrorMessage
+            message={formik.errors.password}
+            name="password"
+            formik={formik}
+          />
         </div>
 
         <div className="w-100 d-flex justify-content-center ">
