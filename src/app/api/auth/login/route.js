@@ -3,16 +3,17 @@ import { NextResponse } from 'next/server';
 import connect from '@/dbConfig/dbConfig';
 import User from '@/models/userModal';
 import { sign } from 'jsonwebtoken';
+import { compare } from 'bcryptjs';
 
 connect();
 
-export async function POST(params) {
+export async function POST(request) {
   try {
     const reqBody = await request.json();
     const { userid, password } = reqBody;
 
     // Check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ userid });
     if (!user) {
       return NextResponse.json(
         { error: 'User does not exist' },

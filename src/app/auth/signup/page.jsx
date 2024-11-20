@@ -33,7 +33,7 @@ function Signup() {
       })
       .then(() => {
         formik.resetForm();
-        router.push(`/login`);
+        router.push(`/auth/login`);
       })
       .catch((error) => {
         if (error.response.status === 400) {
