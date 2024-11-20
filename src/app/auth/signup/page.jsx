@@ -1,13 +1,11 @@
 'use client';
-
-import { useFormik } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
-
-import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
-
-import '@/styles/auth/style.css';
+import { useFormik } from 'formik';
 import { useState } from 'react';
 import axios from 'axios';
+
+import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
+import '@/styles/auth/style.css';
 
 function Signup() {
   const [loading, setLoading] = useState({ type: '', state: false });
@@ -30,7 +28,9 @@ function Signup() {
         userid: formik.values.userId,
         password: formik.values.password,
       })
-      .then(() => {})
+      .then(() => {
+        formik.resetForm();
+      })
       .catch((error) => {
         if (error.response.status === 400) {
           toast.error(error.response.data.error);
