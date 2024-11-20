@@ -68,9 +68,10 @@ function Signup() {
             <input
               type="text"
               className="form-control mt-2 fw-bold"
+              placeholder="userid"
               name="userId"
-              placeholder="email"
               onChange={formik.handleChange}
+              value={formik.values.userId}
             />
             <ErrorMessage
               message={formik.errors.userId}
@@ -86,6 +87,7 @@ function Signup() {
               placeholder="password"
               name="password"
               onChange={formik.handleChange}
+              value={formik.values.password}
             />
             <ErrorMessage
               message={formik.errors.password}

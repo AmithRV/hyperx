@@ -1,5 +1,6 @@
 import connect from '@/dbConfig/dbConfig';
 import User from '@/models/userModal';
+import { genSalt, hash } from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
 connect();
@@ -18,8 +19,13 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
+    //hash password
+    const salt = await genSalt(10);
+    const hashedPassword = await hash(password, salt);
+
     //Add user to the db
-    const newUser = new User({ userid, password });
+    const newUser = new User({ userid, password: hashedPassword });
     const savedUser = await newUser.save();
 
     return NextResponse.json({
