@@ -5,8 +5,11 @@ import { useFormik } from 'formik';
 import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
 
 import '@/styles/auth/style.css';
+import { useState } from 'react';
+import axios from 'axios';
 
 function Login() {
+  const [loading, setLoading] = useState({ type: '', state: false });
   const validate = (data) => {
     const errors = {};
 
@@ -19,13 +22,26 @@ function Login() {
     return errors;
   };
 
+  const handleFormSubmit = () => {
+    setLoading({ type: 'login', state: true });
+    axios
+      .post('/api/auth/login', {
+        userid: formik.values.userId,
+        password: formik.values.password,
+      })
+      .then(() => {})
+      .catch(() => {});
+  };
+
   const formik = useFormik({
     initialValues: {
       userId: '',
       password: '',
     },
     validate,
-    onSubmit: () => {},
+    onSubmit: () => {
+      handleFormSubmit();
+    },
   });
 
   const handleSubmit = (e) => {
