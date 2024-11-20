@@ -1,13 +1,70 @@
-import React from 'react';
-import Example from './Component';
+'use client';
+
+import { useFormik } from 'formik';
+
+import ErrorMessage from '../components/ui/form/ErrorMessage';
+
 import '../../styles/auth/style.css';
 
-function page() {
+function Login() {
+  const validate = (data) => {
+    const errors = {};
+
+    if (!data.userId) {
+      errors.userId = 'userId required';
+    }
+    if (!data.password) {
+      errors.password = 'password required';
+    }
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      userId: '',
+      password: '',
+    },
+    validate,
+    onSubmit: () => {},
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formik.handleSubmit();
+  };
+
   return (
     <div className="auth_section_1">
-      <Example />
+      <form className="form_section" onSubmit={handleSubmit}>
+        <div className="form-group mx-4 my-4">
+          <label htmlFor="exampleInputEmail1">UserId</label>
+          <input
+            type="text"
+            className="form-control mt-2 fw-bold"
+            name="userId"
+            onChange={formik.handleChange}
+          />
+          <ErrorMessage message={formik.errors.userId} />
+        </div>
+        <div className="form-group mx-4 mt-4 mb-3">
+          <label htmlFor="exampleInputPassword1">Password</label>
+          <input
+            type="password"
+            className="form-control mt-2 fw-bold"
+            name="password"
+            onChange={formik.handleChange}
+          />
+          <ErrorMessage message={formik.errors.password} />
+        </div>
+
+        <div className="w-100 d-flex justify-content-center ">
+          <button type="submit" className="btn btn-primary mx-4 my-4 w-100">
+            Login
+          </button>
+        </div>
+      </form>{' '}
     </div>
   );
 }
 
-export default page;
+export default Login;
