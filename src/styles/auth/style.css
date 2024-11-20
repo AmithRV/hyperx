@@ -31,6 +31,5 @@ input::placeholder {
 @media (max-width: 767px) {
     .form_section {
         width: 90%;
-        height: 300px;
     }
 }
