@@ -10,9 +10,6 @@ export async function POST(request) {
   try {
     const reqBody = await request.json();
     const { userid, password } = reqBody;
-    console.log('--------------------------------------');
-    console.log('userid : ', userid);
-    console.log('password : ', password);
 
     // Check if user exists
     const user = await User.findOne({ userid });
@@ -25,7 +22,6 @@ export async function POST(request) {
 
     //check if password is correct
     const response = compare(password, user.password).then((valid) => {
-      console.log('valid : ', valid);
       if (valid) {
         // Create token data
         const tokenData = {
@@ -47,7 +43,6 @@ export async function POST(request) {
 
         return response;
       }
-      console.log('here');
       return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
     });
     return response;
