@@ -12,6 +12,7 @@ function Login() {
   const router = useRouter();
 
   const [loading, setLoading] = useState({ type: '', state: false });
+
   const validate = (data) => {
     const errors = {};
 
@@ -49,7 +50,7 @@ function Login() {
 
   const formik = useFormik({
     initialValues: {
-      userId: '',
+      userId: 'amith@123',
       password: '',
     },
     validate,

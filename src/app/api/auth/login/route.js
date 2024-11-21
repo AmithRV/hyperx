@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-
 import connect from '@/dbConfig/dbConfig';
 import User from '@/models/userModal';
 import { sign } from 'jsonwebtoken';
@@ -11,6 +10,9 @@ export async function POST(request) {
   try {
     const reqBody = await request.json();
     const { userid, password } = reqBody;
+    console.log('--------------------------------------');
+    console.log('userid : ', userid);
+    console.log('password : ', password);
 
     // Check if user exists
     const user = await User.findOne({ userid });
@@ -23,29 +25,29 @@ export async function POST(request) {
 
     //check if password is correct
     const isValidPassword = compare(password, user.password);
+    console.log('isValidPassword : ', isValidPassword);
     if (!isValidPassword) {
       return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
-    } else {
-      // Create token data
-      const tokenData = {
-        id: user._id,
-        userid: user.userid,
-      };
-
-      //Create token
-      const token = sign(tokenData, process.env.TOKEN_SECRET, {
-        expiresIn: '1d',
-      });
-
-      //Create response
-      const response = NextResponse.json({
-        userId: user._id,
-        success: true,
-      });
-      response.cookies.set('token', token, { httpOnly: true });
-
-      return response;
     }
+    // Create token data
+    const tokenData = {
+      id: user._id,
+      userid: user.userid,
+    };
+
+    //Create token
+    const token = sign(tokenData, process.env.TOKEN_SECRET, {
+      expiresIn: '1d',
+    });
+
+    //Create response
+    const response = NextResponse.json({
+      userId: user._id,
+      success: true,
+    });
+    response.cookies.set('token', token, { httpOnly: true });
+
+    return response;
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
