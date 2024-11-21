@@ -50,7 +50,7 @@ function Login() {
 
   const formik = useFormik({
     initialValues: {
-      userId: 'amith@123',
+      userId: '',
       password: '',
     },
     validate,
