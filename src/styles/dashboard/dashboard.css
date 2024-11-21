@@ -1,0 +1,20 @@
+.section-1 {
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-2 {
+    border: 1px solid black;
+    border-radius: 6px;
+    width: 300px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 600;
+}

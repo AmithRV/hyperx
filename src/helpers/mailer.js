@@ -1,13 +1,13 @@
 import { createTransport } from 'nodemailer';
 
-export const sendEmail = async ({ email, userId = '' }) => {
+export const sendEmail = async ({ email = '', userId = '' }) => {
   try {
     const transport = createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: process.env.MAILTRAP_HOST,
+      port: process.env.MAILTRAP_PORT,
       auth: {
-        user: 'b3845e70582851',
-        pass: 'ec8823ab3daaf3',
+        user: process.env.MAILTRAP_USER_ID,
+        pass: process.env.MAILTRAP_PASS,
       },
     });
 
@@ -16,7 +16,12 @@ export const sendEmail = async ({ email, userId = '' }) => {
       to: email,
       subject: 'TestMaiil',
       text: 'Hello world?', // plain text body
-      html: `<a href="${process.env.domain}/verifyemail">Hello ${userId}</a>`,
+      html: `
+            <div style="width: 100vw; height: 100vh; background-color: white; display: flex; justify-content: center; align-items: center;">
+                <div style="border: 1px solid black; border-radius: 6px; width: 300px; color: red; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: 600;">
+                    A new sign-in on Windows
+                </div>
+            </div>`,
     };
 
     const mailResponse = await transport.sendMail(mailOptions);

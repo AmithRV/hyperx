@@ -3,6 +3,7 @@ import connect from '@/dbConfig/dbConfig';
 import User from '@/models/userModal';
 import { sign } from 'jsonwebtoken';
 import { compare } from 'bcryptjs';
+import { sendEmail } from '@/helpers/mailer';
 
 connect();
 
@@ -41,10 +42,15 @@ export async function POST(request) {
         });
         response.cookies.set('token', token, { httpOnly: true });
 
+        //  send verification mail
+
         return response;
       }
       return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
     });
+
+    await sendEmail({ email: 'amith@gmail.com', userid });
+
     return response;
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
