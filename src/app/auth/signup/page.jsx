@@ -21,6 +21,9 @@ function Signup() {
     if (!data.password) {
       errors.password = 'password required';
     }
+    if (!data.email) {
+      errors.email = 'email required';
+    }
     return errors;
   };
 
@@ -30,6 +33,7 @@ function Signup() {
       .post('/api/auth/signup', {
         userid: formik.values.userId,
         password: formik.values.password,
+        email: formik.values.email,
       })
       .then(() => {
         formik.resetForm();
@@ -51,6 +55,7 @@ function Signup() {
     initialValues: {
       userId: '',
       password: '',
+      email: '',
     },
     validate,
     onSubmit: () => {
@@ -80,6 +85,22 @@ function Signup() {
             <ErrorMessage
               message={formik.errors.userId}
               name="userId"
+              formik={formik}
+            />
+          </div>
+          <div className="form-group mx-4 mt-4 mb-3">
+            <label htmlFor="exampleInputPassword1">email</label>
+            <input
+              type="email"
+              className="form-control mt-2 fw-bold"
+              placeholder="email"
+              name="email"
+              onChange={formik.handleChange}
+              value={formik.values.email}
+            />
+            <ErrorMessage
+              message={formik.errors.password}
+              name="password"
               formik={formik}
             />
           </div>

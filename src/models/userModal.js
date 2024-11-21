@@ -6,6 +6,11 @@ const userSchema = new Schema({
     require: [true, 'Please provide a userid'],
     unique: true,
   },
+  email: {
+    type: String,
+    require: [true, 'Please provide a email'],
+    unique: true,
+  },
   password: {
     type: String,
     require: [true, 'Please provide a password'],
