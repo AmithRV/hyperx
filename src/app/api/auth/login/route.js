@@ -24,29 +24,32 @@ export async function POST(request) {
     }
 
     //check if password is correct
-    const isValidPassword = compare(password, user.password);
-    console.log('isValidPassword : ', isValidPassword);
-    if (!isValidPassword) {
+    const response = compare(password, user.password).then((valid) => {
+      console.log('valid : ', valid);
+      if (valid) {
+        // Create token data
+        const tokenData = {
+          id: user._id,
+          userid: user.userid,
+        };
+
+        //Create token
+        const token = sign(tokenData, process.env.TOKEN_SECRET, {
+          expiresIn: '1d',
+        });
+
+        //Create response
+        const response = NextResponse.json({
+          userId: user._id,
+          success: true,
+        });
+        response.cookies.set('token', token, { httpOnly: true });
+
+        return response;
+      }
+      console.log('here');
       return NextResponse.json({ error: 'Invalid password' }, { status: 400 });
-    }
-    // Create token data
-    const tokenData = {
-      id: user._id,
-      userid: user.userid,
-    };
-
-    //Create token
-    const token = sign(tokenData, process.env.TOKEN_SECRET, {
-      expiresIn: '1d',
     });
-
-    //Create response
-    const response = NextResponse.json({
-      userId: user._id,
-      success: true,
-    });
-    response.cookies.set('token', token, { httpOnly: true });
-
     return response;
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
