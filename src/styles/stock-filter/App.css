@@ -4,8 +4,10 @@
   background-color: black;
   color: white;
   overflow-y: scroll;
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none; /* For IE and Edge */
+  scrollbar-width: none;
+  /* For Firefox */
+  -ms-overflow-style: none;
+  /* For IE and Edge */
 }
 
 

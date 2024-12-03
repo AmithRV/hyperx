@@ -1,3 +1,15 @@
 .dashboard-section-1 {
     display: flex;
 }
+
+.indices {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    height: 640px;
+    overflow: scroll;
+    border-radius: 5px;
+}
+
+.indices::-webkit-scrollbar {
+    display: none;
+}

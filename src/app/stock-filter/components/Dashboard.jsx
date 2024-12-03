@@ -4,17 +4,16 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useEffect, useState } from 'react';
 import Badge from 'react-bootstrap/Badge';
-import Stack from 'react-bootstrap/Stack';
-import Table from 'react-bootstrap/Table';
+
+import Layout from '@/app/stock-filter/components/layouts/Layout';
+import '@/styles/stock-filter/dashboard.css';
 import Form from 'react-bootstrap/Form';
+import ItemsTable from './ItemsTable';
 import { CSVLink } from 'react-csv';
 import numeral from 'numeral';
 import Papa from 'papaparse';
 
-import Layout from '@/app/stock-filter/components/layouts/Layout';
-import '@/styles/stock-filter/dashboard.css';
-import axios from 'axios';
-import Link from 'next/link';
+import Indices from './Indices';
 import { indices } from '../data';
 
 function Dashboard() {
@@ -163,7 +162,7 @@ function Dashboard() {
             </Form.Group>
           </div>
           <div className="w-50 d-flex">
-            <div className="w-50 h-100 ml-4" id="section-9 ">
+            <div className="w-100 h-100 ml-4" id="section-9 ">
               <ListGroup className="mx-4">
                 <ListGroup.Item className="bg-dark text-white d-flex justify-content-between">
                   Total Items
@@ -195,74 +194,20 @@ function Dashboard() {
                 )}
               </ListGroup>
             </div>
-            <div className="w-50 h-100 ml-4" id="section-9 ">
-              <ListGroup className="mx-4">
-                {indices.map((e, index) => (
-                  <ListGroup.Item
-                    className="bg-dark text-white d-flex justify-content-between"
-                    key={index}
-                  >
-                    <Link
-                      href={`https://www.nseindia.com/market-data/live-equity-market?symbol=${e.indexSymbol}`}
-                      className="text-white text-decoration-none w-100"
-                      target="_blank"
-                    >
-                      {e?.index}
-                    </Link>
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            </div>
           </div>
         </div>
-
-        <Stack direction="horizontal" className="my-4" gap={2}>
-          {headers.map((header, index) => (
-            <Badge
-              pill
-              bg={selectedHeaders.includes(header) ? 'primary' : 'secondary'}
-              key={index}
-              onClick={() => {
-                toggleHeader(header, index);
-              }}
-              onDoubleClick={() => {
-                if (filterKey?.high) {
-                  setFilterKey({ ...filterKey, ltp: header });
-                } else {
-                  setFilterKey({ ...filterKey, high: header });
-                }
-              }}
-              style={{ cursor: 'pointer' }}
-            >
-              {header}
-            </Badge>
-          ))}
-        </Stack>
-
-        <Table
-          className={`table table-dark table-striped ${
-            csvData.length === 0 ? 'd-none' : ''
-          }`}
-        >
-          <thead>
-            <tr>
-              <th>#</th>
-              {selectedHeaders.map((e, index) => (
-                <th key={index}>{e}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData?.map((data, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                {selectedHeaders.map((e, i) => (
-                  <td key={i}>{data[e]}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+        <div className="w-100 d-flex">
+          <ItemsTable
+            headers={headers}
+            selectedHeaders={selectedHeaders}
+            csvData={csvData}
+            filteredData={filteredData}
+            filterKey={filterKey}
+            toggleHeader={toggleHeader}
+            setFilterKey={setFilterKey}
+          />
+          <Indices indices={indices} />
+        </div>
       </div>
     </Layout>
   );
