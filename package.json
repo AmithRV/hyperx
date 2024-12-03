@@ -17,8 +17,10 @@
     "mongoose": "^8.8.2",
     "next": "15.0.3",
     "nodemailer": "^6.9.16",
+    "numeral": "^2.0.6",
+    "papaparse": "^5.4.1",
     "react": "19.0.0-rc-66855b96-20241106",
-    "react-bootstrap": "^2.10.5",
+    "react-bootstrap": "^2.10.6",
     "react-dom": "19.0.0-rc-66855b96-20241106",
     "react-hot-toast": "^2.4.1"
   },

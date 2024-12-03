@@ -1,0 +1,15 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  overflow-y: scroll;
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For IE and Edge */
+}
+
+
+.app::-webkit-scrollbar {
+  display: none;
+  /* For Chrome, Safari, and Edge */
+}
