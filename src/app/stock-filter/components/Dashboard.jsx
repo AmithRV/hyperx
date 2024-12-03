@@ -24,8 +24,8 @@ function Dashboard() {
   const [headers, setHeaders] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [filterKey, setFilterKey] = useState({ high: '', ltp: '' });
-
   const [formatedCsvData, setFormatedCsvData] = useState();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleFileUpload = (event) => {
     setFilterKey({ high: '', ltp: '' });
@@ -205,8 +205,10 @@ function Dashboard() {
             filterKey={filterKey}
             toggleHeader={toggleHeader}
             setFilterKey={setFilterKey}
+            isExpanded={isExpanded}
+            setIsExpanded={setIsExpanded}
           />
-          <Indices indices={indices} />
+          {!isExpanded && <Indices indices={indices} />}
         </div>
       </div>
     </Layout>

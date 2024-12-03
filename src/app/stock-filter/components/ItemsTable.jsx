@@ -13,9 +13,11 @@ function ItemsTable({
   filterKey = {},
   toggleHeader,
   setFilterKey,
+  isExpanded = false,
+  setIsExpanded,
 }) {
   return (
-    <div className="w-75 items-table">
+    <div className={`${isExpanded ? 'w-100' : 'w-75'} items-table`}>
       <Stack direction="horizontal" className="my-4" gap={2}>
         {headers.map((header, index) => (
           <Badge
@@ -37,6 +39,28 @@ function ItemsTable({
             {header}
           </Badge>
         ))}
+        {selectedHeaders.length > 0 && !isExpanded && (
+          <Badge
+            bg="danger"
+            onClick={() => {
+              setIsExpanded(true);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            ⛶
+          </Badge>
+        )}
+        {selectedHeaders.length > 0 && isExpanded && (
+          <Badge
+            bg="danger"
+            onClick={() => {
+              setIsExpanded(false);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            ↕
+          </Badge>
+        )}
       </Stack>
 
       <Table
