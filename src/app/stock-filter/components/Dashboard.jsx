@@ -13,6 +13,9 @@ import Papa from 'papaparse';
 
 import Layout from '@/app/stock-filter/components/layouts/Layout';
 import '@/styles/stock-filter/dashboard.css';
+import axios from 'axios';
+import Link from 'next/link';
+import { indices } from '../data';
 
 function Dashboard() {
   const [isFilterApplied, setIsFilterApplied] = useState(false);
@@ -159,37 +162,57 @@ function Dashboard() {
               </Badge>
             </Form.Group>
           </div>
-          <div className="w-50 h-100 ml-4" id="section-9 ">
-            <ListGroup className="mx-4" style={{ width: '50%' }}>
-              <ListGroup.Item className="bg-dark text-white d-flex justify-content-between">
-                Total Items
-                <Badge bg="primary" pill>
-                  {csvData?.length}
-                </Badge>
-              </ListGroup.Item>
-              <ListGroup.Item className="bg-dark text-white d-flex justify-content-between">
-                Filtered Result
-                <Badge bg="primary" pill>
-                  {filteredData?.length}
-                </Badge>
-              </ListGroup.Item>
-              {filterKey?.high && (
+          <div className="w-50 d-flex">
+            <div className="w-50 h-100 ml-4" id="section-9 ">
+              <ListGroup className="mx-4">
                 <ListGroup.Item className="bg-dark text-white d-flex justify-content-between">
-                  52Week High Key
-                  <Badge bg="danger" pill>
-                    {filterKey?.high}
+                  Total Items
+                  <Badge bg="primary" pill>
+                    {csvData?.length}
                   </Badge>
                 </ListGroup.Item>
-              )}
-              {filterKey?.ltp && (
                 <ListGroup.Item className="bg-dark text-white d-flex justify-content-between">
-                  Ltp Key
-                  <Badge bg="danger" pill>
-                    {filterKey?.ltp}
+                  Filtered Result
+                  <Badge bg="primary" pill>
+                    {filteredData?.length}
                   </Badge>
                 </ListGroup.Item>
-              )}
-            </ListGroup>
+                {filterKey?.high && (
+                  <ListGroup.Item className="bg-dark text-white d-flex justify-content-between">
+                    52Week High Key
+                    <Badge bg="danger" pill>
+                      {filterKey?.high}
+                    </Badge>
+                  </ListGroup.Item>
+                )}
+                {filterKey?.ltp && (
+                  <ListGroup.Item className="bg-dark text-white d-flex justify-content-between">
+                    Ltp Key
+                    <Badge bg="danger" pill>
+                      {filterKey?.ltp}
+                    </Badge>
+                  </ListGroup.Item>
+                )}
+              </ListGroup>
+            </div>
+            <div className="w-50 h-100 ml-4" id="section-9 ">
+              <ListGroup className="mx-4">
+                {indices.map((e, index) => (
+                  <ListGroup.Item
+                    className="bg-dark text-white d-flex justify-content-between"
+                    key={index}
+                  >
+                    <Link
+                      href={`https://www.nseindia.com/market-data/live-equity-market?symbol=${e.indexSymbol}`}
+                      className="text-white text-decoration-none w-100"
+                      target="_blank"
+                    >
+                      {e?.index}
+                    </Link>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </div>
           </div>
         </div>
 
