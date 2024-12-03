@@ -1,0 +1,8 @@
+.items-table {
+    height: 640px !important;
+    overflow: scroll;
+}
+
+.items-table::-webkit-scrollbar {
+    display: none;
+}

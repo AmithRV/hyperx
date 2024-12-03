@@ -3,6 +3,8 @@ import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
 import React from 'react';
 
+import '@/styles/stock-filter/items-table.css';
+
 function ItemsTable({
   headers = [],
   selectedHeaders = [],
@@ -13,7 +15,7 @@ function ItemsTable({
   setFilterKey,
 }) {
   return (
-    <div className="w-75">
+    <div className="w-75 items-table">
       <Stack direction="horizontal" className="my-4" gap={2}>
         {headers.map((header, index) => (
           <Badge
