@@ -7,6 +7,7 @@ import Badge from 'react-bootstrap/Badge';
 import Stack from 'react-bootstrap/Stack';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
+import { CSVLink } from 'react-csv';
 import numeral from 'numeral';
 import Papa from 'papaparse';
 
@@ -22,6 +23,8 @@ function Dashboard() {
   const [filteredData, setFilteredData] = useState([]);
   const [filterKey, setFilterKey] = useState({ high: '', ltp: '' });
 
+  const [formatedCsvData, setFormatedCsvData] = useState();
+
   const handleFileUpload = (event) => {
     setFilterKey({ high: '', ltp: '' });
     const file = event.target.files[0];
@@ -32,7 +35,7 @@ function Dashboard() {
         complete: (result) => {
           const headers = Object.keys(result.data[0]) || {};
           setHeaders(headers);
-          setSelectedHeaders(headers);
+          setSelectedHeaders([...headers, 'delta']);
           setCsvData(result.data);
           setFilteredData(result.data);
         },
@@ -70,28 +73,52 @@ function Dashboard() {
 
   useEffect(() => {
     if (isFilterApplied) {
-      const data = csvData.filter(
-        (e) =>
-          changeFrom52WH(e[filterKey?.high], e[filterKey?.ltp]) <=
-          parseInt(filterValue, 10)
+      const data = formatedCsvData.filter(
+        (e) => e.delta <= parseInt(filterValue, 10)
       );
+
       setFilteredData(data);
     } else {
-      setFilteredData(csvData);
+      setFilteredData(formatedCsvData);
     }
-  }, [csvData, filterValue, isFilterApplied, filterKey]);
+  }, [formatedCsvData, filterValue, isFilterApplied, filterKey]);
+
+  useEffect(() => {
+    if (filterKey.high && filterKey.ltp && csvData.length > 0) {
+      const updatedData = csvData.map((item) => ({
+        ...item,
+        delta: changeFrom52WH(item[filterKey?.high], item[filterKey?.ltp]),
+      }));
+      setFormatedCsvData(updatedData);
+      setFilteredData(updatedData);
+    } else {
+      setFormatedCsvData(csvData);
+    }
+  }, [filterKey, csvData]);
 
   return (
     <Layout>
       <div className="dashboard-wrap my-4 mx-4">
         <div className="dashboard-section-1">
           <div className="w-50 h-100" id="section-8">
-            <Form.Group controlId="formFile" className="mb-4 w-50">
+            <Form.Group controlId="formFile" className="mb-4 w-50 d-flex">
               <Form.Control
                 type="file"
                 accept=".csv"
                 onChange={handleFileUpload}
               />
+
+              {filteredData?.length > 0 && (
+                <CSVLink
+                  data={filteredData}
+                  headers={selectedHeaders}
+                  filename={'my-data.csv'}
+                  className="btn btn-primary mx-2 px-4 py-2"
+                  title=""
+                >
+                  Export
+                </CSVLink>
+              )}
             </Form.Group>
 
             <Form.Group style={{ width: '300px' }}>
@@ -200,19 +227,15 @@ function Dashboard() {
               {selectedHeaders.map((e, index) => (
                 <th key={index}>{e}</th>
               ))}
-              <th>Δ 52WH</th>
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((data, index) => (
+            {filteredData?.map((data, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 {selectedHeaders.map((e, i) => (
                   <td key={i}>{data[e]}</td>
                 ))}
-                <td>
-                  {changeFrom52WH(data[filterKey?.high], data[filterKey?.ltp])}
-                </td>
               </tr>
             ))}
           </tbody>
