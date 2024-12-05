@@ -1,8 +1,17 @@
 .items-table {
     height: 640px !important;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .items-table::-webkit-scrollbar {
+    display: none;
+}
+
+.table-items-wrap {
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.table-items-wrap ::-webkit-scrollbar {
     display: none;
 }
