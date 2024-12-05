@@ -4,3 +4,24 @@
     height: calc(100vh - 70px);
     overflow: hidden;
 }
+
+.active-tasks {
+    border: 1px solid #212e3e !important;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+
+.box,
+.box-expanded {
+    transition: height 1s ease;
+    overflow: hidden;
+}
+
+.box {
+    height: 25%;
+}
+
+.box-expanded {
+    height: 75%;
+}
