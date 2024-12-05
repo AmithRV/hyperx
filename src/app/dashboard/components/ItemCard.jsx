@@ -3,24 +3,19 @@ import { useRouter } from 'next/navigation';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-function ItemCard() {
+function ItemCard({ label = '', image = '', link = '' }) {
   const router = useRouter();
 
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img
-        variant="top"
-        src="./images/filter.jpg"
-        width="250px"
-        height="250px"
-      />
+    <Card style={{ width: '18rem' }} className="mx-4">
+      <Card.Img variant="top" src={image} />
       <Card.Body>
-        <Card.Title>Stock Filter</Card.Title>
+        <Card.Title>{label}</Card.Title>
         <Button
           variant="primary"
           className="mt-3"
           onClick={() => {
-            router.push(`/stock-filter`);
+            router.push(link);
           }}
         >
           Browse
