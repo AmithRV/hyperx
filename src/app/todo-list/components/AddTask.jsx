@@ -4,7 +4,6 @@ import '@/styles/todo-list/add-task.css';
 
 function AddTask({ handleAddToList }) {
   const [task, setTtask] = useState('');
-
   return (
     <div className="add-task-wrap mx-2 my-4">
       <form

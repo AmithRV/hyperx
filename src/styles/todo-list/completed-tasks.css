@@ -1,0 +1,24 @@
+.completed-tasks-wrap {
+    background-color: black;
+}
+
+.accordion-button {
+    background-color: black !important;
+    color: white !important;
+}
+
+.accordion-header {
+    border-bottom: 1px solid white;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-button::after {
+    background-image: none !important;
+}
+
+.accordion-body {
+    background: black;
+}

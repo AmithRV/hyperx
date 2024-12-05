@@ -1,0 +1,9 @@
+.task-item-wrap {
+    align-items: center;
+    border: 1px solid #4d586b;
+    display: flex;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    color: white;
+}
