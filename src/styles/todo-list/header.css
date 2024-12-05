@@ -1,0 +1,61 @@
+.todo-list-header {
+    background: linear-gradient(90deg, #1f2d42, #2d4261);
+    height: 70px;
+}
+
+.loader {
+    align-items: center;
+    display: flex;
+    height: 70px;
+    justify-content: center;
+    margin-left: 10px;
+    width: 40px;
+}
+
+.circle:first-child {
+    -webkit-animation-delay: .1s;
+    animation-delay: .1s;
+    background: linear-gradient(45deg, #337aff, #572ff3, #e81f6c, #f1c726);
+    background-size: 200%;
+    height: 40px;
+    width: 40px;
+}
+
+.circle {
+    -webkit-animation: colorfull-spin 2s infinite alternate;
+    animation: colorfull-spin 2s infinite alternate;
+    border-radius: 50%;
+    position: absolute;
+}
+
+@keyframes colorfull-spin {
+    0% {
+        background-position: 0 50%;
+        border-radius: 50%;
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+
+    20% {
+        border-radius: 50%;
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    90% {
+        border-radius: 5%;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+
+    100% {
+        background-position: 0 50%;
+        border-radius: 5%;
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+}

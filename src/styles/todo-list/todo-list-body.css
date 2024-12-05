@@ -1,0 +1,6 @@
+.todo-list-body-wrap {
+    background-color: #121212;
+    width: 100%;
+    height: calc(100vh - 70px);
+    overflow: hidden;
+}
