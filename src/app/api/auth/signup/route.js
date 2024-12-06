@@ -1,7 +1,8 @@
-import connect from '@/dbConfig/dbConfig';
-import User from '@/models/userModal';
 import { genSalt, hash } from 'bcryptjs';
 import { NextResponse } from 'next/server';
+
+import connect from '@/dbConfig/dbConfig';
+import User from '@/models/userModal';
 
 connect();
 
