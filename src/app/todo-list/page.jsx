@@ -1,21 +1,24 @@
 'use client';
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-import '@/styles/todo-list/todo-list-body.css';
+import CompletedTask from './components/CompletedTask';
 import TaskItem from './components/TaskItem';
 import AddTask from './components/AddTask';
 import Layout from './components/Layout';
-import CompletedTask from './components/CompletedTask';
+
+import '@/styles/todo-list/todo-list-body.css';
 
 function TodoList() {
-  const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
-
+  const [task, setTtask] = useState('');
   const [taskList, setTtaskList] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
+  const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
 
   const handleAddToList = (task) => {
-    console.log('task : ', task);
-    setTtaskList((prevArray) => [...prevArray, task]);
+    const data = { id: uuidv4(), label: task, status: 'active' };
+    setTtaskList((prevArray) => [...prevArray, data]);
+    setTtask('');
   };
 
   const handleUpdateTaskStatus = () => {};
@@ -23,14 +26,18 @@ function TodoList() {
   return (
     <Layout>
       <div className="todo-list-body-wrap">
-        <AddTask handleAddToList={handleAddToList} />
+        <AddTask
+          handleAddToList={handleAddToList}
+          task={task}
+          setTtask={setTtask}
+        />
         <div
           className={`active-tasks mx-2 ${
             isCompletedTasksOpen ? 'box' : 'box-expanded'
           }`}
         >
-          {taskList.map((task, index) => (
-            <TaskItem key={index} id={task.id} label={task.label} />
+          {[...taskList].reverse().map((task) => (
+            <TaskItem key={task.id} id={task.id} label={task.label} />
           ))}
         </div>
 

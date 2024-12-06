@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import '@/styles/todo-list/add-task.css';
 
-function AddTask({ handleAddToList }) {
-  const [task, setTtask] = useState('');
+function AddTask({ handleAddToList, task = '', setTtask }) {
   return (
     <div className="add-task-wrap mx-2 my-4">
       <form
@@ -19,6 +18,7 @@ function AddTask({ handleAddToList }) {
             setTtask(e.target.value);
           }}
           value={task}
+          autoFocus
         />
       </form>
     </div>
