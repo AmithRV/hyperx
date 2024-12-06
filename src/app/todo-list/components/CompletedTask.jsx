@@ -1,8 +1,9 @@
 import Accordion from 'react-bootstrap/Accordion';
 import React from 'react';
 
-import '@/styles/todo-list/completed-tasks.css';
 import TaskItem from './TaskItem';
+
+import '@/styles/todo-list/completed-tasks.css';
 
 function CompletedTask({
   completedTasks = [],

@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
+
 import '@/styles/todo-list/add-task.css';
 
 function AddTask({ handleAddToList, task = '', setTtask }) {
@@ -14,6 +15,7 @@ function AddTask({ handleAddToList, task = '', setTtask }) {
       >
         <input
           className="add-task-inpt w-100 h-100"
+          placeholder="Add a task"
           onChange={(e) => {
             setTtask(e.target.value);
           }}

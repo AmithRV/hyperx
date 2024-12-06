@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import CompletedTask from './components/CompletedTask';
@@ -21,7 +21,19 @@ function TodoList() {
     setTtask('');
   };
 
-  const handleUpdateTaskStatus = () => {};
+  const handleUpdateTaskStatus = (taskId) => {
+    const taskDetails = taskList.filter((e) => e.id === taskId)[0];
+    if (taskDetails.status === 'active') {
+      const filteredTasks = taskList.filter((e) => e.id !== taskId);
+      setTtaskList(filteredTasks);
+      setCompletedTasks((prevArray) => [...prevArray, taskDetails]);
+    }
+  };
+
+  useEffect(() => {
+    console.clear();
+    console.table(taskList);
+  }, [taskList]);
 
   return (
     <Layout>
@@ -37,7 +49,12 @@ function TodoList() {
           }`}
         >
           {[...taskList].reverse().map((task) => (
-            <TaskItem key={task.id} id={task.id} label={task.label} />
+            <TaskItem
+              key={task.id}
+              id={task.id}
+              label={task.label}
+              handleUpdateTaskStatus={handleUpdateTaskStatus}
+            />
           ))}
         </div>
 
