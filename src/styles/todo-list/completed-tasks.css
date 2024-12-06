@@ -22,7 +22,7 @@
 
 .accordion-body {
     background: black;
-    overflow: hidden;
+    scrollbar-width: none;
 }
 
 .accordion-collapse {

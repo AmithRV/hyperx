@@ -48,6 +48,8 @@ function TodoList() {
 
       setTaskList(filteredTasks);
       setCompletedTasks((prevArray) => [...prevArray, taskDetails]);
+
+      axios.patch('/api/todo-list', { taskId, status: 'completed' });
     }
 
     if (taskStatus === 'completed') {
@@ -58,6 +60,8 @@ function TodoList() {
 
       setCompletedTasks(filteredTasks);
       setTaskList((prevArray) => [...prevArray, taskDetails]);
+
+      axios.patch('/api/todo-list', { taskId, status: 'active' });
     }
   };
 

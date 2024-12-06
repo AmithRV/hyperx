@@ -44,3 +44,35 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function PATCH(request) {
+  try {
+    const reqBody = await request.json();
+    const { taskId, status } = reqBody;
+
+    // Find the specific task
+    const task = await Task.findById(taskId);
+
+    // Check if task exists
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    // Update status
+    task.status = status;
+    await task.save();
+
+    console.log('reqBody : ', reqBody);
+
+    return NextResponse.json({
+      message: 'Task completed successfully',
+      task: {
+        id: task._id,
+        title: task.title,
+        status: task.status,
+      },
+    });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
