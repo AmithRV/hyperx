@@ -54,6 +54,7 @@ function TodoList() {
               id={task.id}
               label={task.label}
               handleUpdateTaskStatus={handleUpdateTaskStatus}
+              checked={false}
             />
           ))}
         </div>

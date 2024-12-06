@@ -27,7 +27,13 @@ function CompletedTask({
           </Accordion.Header>
           <Accordion.Body className="h-100">
             {completedTasks.map((task) => (
-              <TaskItem key={task.id} id={task.id} label={task.label} />
+              <TaskItem
+                key={task.id}
+                id={task.id}
+                label={task.label}
+                checked={true}
+                handleUpdateTaskStatus={handleUpdateTaskStatus}
+              />
             ))}
           </Accordion.Body>
         </Accordion.Item>
