@@ -23,5 +23,5 @@
 }
 
 .box-expanded {
-    height: 75%;
+    height: calc(100% - 55px);
 }

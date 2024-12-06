@@ -21,6 +21,7 @@ function AddTask({ handleAddToList, task = '', setTask }) {
           }}
           value={task}
           autoFocus
+          maxLength={200}
         />
       </form>
     </div>
