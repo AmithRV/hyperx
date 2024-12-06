@@ -1,6 +1,8 @@
 .completed-tasks-wrap {
     background-color: #000000;
     overflow: hidden;
+    border: 1px solid white;
+    border-radius: 5px;
 }
 
 .accordion-button {
@@ -29,4 +31,8 @@
     height: 100%;
     overflow: scroll;
     scrollbar-width: none;
+}
+
+.accordion-item {
+    border: none;
 }
