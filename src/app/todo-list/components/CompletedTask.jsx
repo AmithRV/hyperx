@@ -11,8 +11,11 @@ function CompletedTask({
 }) {
   return (
     <div className="completed-tasks-wrap mx-2 my-4">
-      <Accordion defaultActiveKey="1">
-        <Accordion.Item>
+      <Accordion
+        defaultActiveKey="1"
+        className={isCompletedTasksOpen ? 'h-100' : ''}
+      >
+        <Accordion.Item eventKey="0" className="h-100">
           <Accordion.Header
             onClick={() => {
               setIsCompletedTasksOpen(!isCompletedTasksOpen);
@@ -20,7 +23,7 @@ function CompletedTask({
           >
             Completed Tasks
           </Accordion.Header>
-          <Accordion.Body>
+          <Accordion.Body className="amith">
             {completedTasks.map((task) => (
               <TaskItem key={task.id} id={task.id} label={task.label} />
             ))}

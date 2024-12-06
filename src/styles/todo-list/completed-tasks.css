@@ -1,5 +1,7 @@
 .completed-tasks-wrap {
     background-color: black;
+    height: 55%;
+    overflow: hidden;
 }
 
 .accordion-button {
@@ -21,6 +23,10 @@
 
 .accordion-body {
     background: black;
+}
+
+.accordion-collapse {
+    height: 100%;
     overflow: scroll;
     scrollbar-width: none;
 }
