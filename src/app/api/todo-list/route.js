@@ -51,18 +51,16 @@ export async function PATCH(request) {
     const { taskId, status } = reqBody;
 
     // Find the specific task
-    const task = await Task.findById(taskId);
+    const task = await Task.findById({ _id: taskId });
 
     // Check if task exists
     if (!task) {
-      return res.status(404).json({ message: 'Task not found' });
+      return NextResponse.json({ error: 'Task not found' }, { status: 404 });
     }
 
     // Update status
     task.status = status;
     await task.save();
-
-    console.log('reqBody : ', reqBody);
 
     return NextResponse.json({
       message: 'Task completed successfully',

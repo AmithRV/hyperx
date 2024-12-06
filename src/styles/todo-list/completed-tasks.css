@@ -12,6 +12,7 @@
 
 .accordion-header {
     border-bottom: 1px solid white;
+    height: 53px;
 }
 
 .accordion-button:focus {
@@ -28,7 +29,7 @@
 }
 
 .accordion-collapse {
-    height: 100%;
+    height: calc(100% - 53px);
     overflow: scroll;
     scrollbar-width: none;
 }
