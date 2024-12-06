@@ -16,9 +16,11 @@ function TodoList() {
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
 
   const handleAddToList = (task) => {
-    const data = { id: uuidv4(), label: task, status: 'active' };
-    setTtaskList((prevArray) => [...prevArray, data]);
-    setTtask('');
+    if (task.trim() !== '') {
+      const data = { id: uuidv4(), label: task, status: 'active' };
+      setTtaskList((prevArray) => [...prevArray, data]);
+      setTtask('');
+    }
   };
 
   const handleUpdateTaskStatus = (taskId) => {
