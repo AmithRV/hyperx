@@ -23,7 +23,8 @@
     "react-bootstrap": "^2.10.6",
     "react-csv": "^2.2.2",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "react-hot-toast": "^2.4.1"
+    "react-hot-toast": "^2.4.1",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "eslint": "^8",

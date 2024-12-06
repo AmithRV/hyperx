@@ -8,6 +8,7 @@ function CompletedTask({
   completedTasks = [],
   isCompletedTasksOpen,
   setIsCompletedTasksOpen,
+  handleUpdateTaskStatus,
 }) {
   return (
     <div className="completed-tasks-wrap mx-2 my-4">
@@ -23,7 +24,7 @@ function CompletedTask({
           >
             Completed Tasks
           </Accordion.Header>
-          <Accordion.Body className="amith">
+          <Accordion.Body className="h-100">
             {completedTasks.map((task) => (
               <TaskItem key={task.id} id={task.id} label={task.label} />
             ))}
