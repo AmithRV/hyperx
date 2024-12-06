@@ -3,13 +3,19 @@ import React from 'react';
 
 import '@/styles/todo-list/task-item.css';
 
-function TaskItem({ id = '', label = '', checked, handleUpdateTaskStatus }) {
+function TaskItem({
+  id = '',
+  label = '',
+  checked = false,
+  status = '',
+  handleUpdateTaskStatus,
+}) {
   return (
     <div className="task-item-wrap mx-2 my-2">
       <Form.Check
         aria-label="option 1"
         onChange={() => {
-          handleUpdateTaskStatus(id);
+          handleUpdateTaskStatus(id, status);
         }}
         checked={checked}
       />

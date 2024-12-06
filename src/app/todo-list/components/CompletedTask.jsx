@@ -32,6 +32,7 @@ function CompletedTask({
                 id={task.id}
                 label={task.label}
                 checked={true}
+                status={task.status}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
               />
             ))}

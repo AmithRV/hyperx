@@ -11,24 +11,37 @@ import '@/styles/todo-list/todo-list-body.css';
 
 function TodoList() {
   const [task, setTtask] = useState('');
-  const [taskList, setTtaskList] = useState([]);
+  const [taskList, setTaskList] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
 
   const handleAddToList = (task) => {
     if (task.trim() !== '') {
       const data = { id: uuidv4(), label: task, status: 'active' };
-      setTtaskList((prevArray) => [...prevArray, data]);
+      setTaskList((prevArray) => [...prevArray, data]);
       setTtask('');
     }
   };
 
-  const handleUpdateTaskStatus = (taskId) => {
-    const taskDetails = taskList.filter((e) => e.id === taskId)[0];
-    if (taskDetails.status === 'active') {
+  const handleUpdateTaskStatus = (taskId, taskStatus) => {
+    if (taskStatus === 'active') {
+      const taskDetails = taskList.filter((e) => e.id === taskId)[0];
+
       const filteredTasks = taskList.filter((e) => e.id !== taskId);
-      setTtaskList(filteredTasks);
+      taskDetails.status = 'completed';
+
+      setTaskList(filteredTasks);
       setCompletedTasks((prevArray) => [...prevArray, taskDetails]);
+    }
+
+    if (taskStatus === 'completed') {
+      const taskDetails = completedTasks.filter((e) => e.id === taskId)[0];
+
+      const filteredTasks = completedTasks.filter((e) => e.id !== taskId);
+      taskDetails.status = 'active';
+
+      setCompletedTasks(filteredTasks);
+      setTaskList((prevArray) => [...prevArray, taskDetails]);
     }
   };
 
@@ -55,8 +68,9 @@ function TodoList() {
               key={task.id}
               id={task.id}
               label={task.label}
-              handleUpdateTaskStatus={handleUpdateTaskStatus}
               checked={false}
+              status={task.status}
+              handleUpdateTaskStatus={handleUpdateTaskStatus}
             />
           ))}
         </div>
