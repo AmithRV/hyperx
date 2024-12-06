@@ -15,7 +15,7 @@
 .box,
 .box-expanded {
     transition: height 1s ease;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .box {

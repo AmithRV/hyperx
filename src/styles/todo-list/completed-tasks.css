@@ -21,4 +21,6 @@
 
 .accordion-body {
     background: black;
+    overflow: scroll;
+    scrollbar-width: none;
 }
