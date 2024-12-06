@@ -1,6 +1,5 @@
 .completed-tasks-wrap {
-    background-color: black;
-    height: 55%;
+    background-color: #000000;
     overflow: hidden;
 }
 
@@ -23,6 +22,7 @@
 
 .accordion-body {
     background: black;
+    overflow: hidden;
 }
 
 .accordion-collapse {

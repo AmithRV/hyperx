@@ -12,7 +12,10 @@ function CompletedTask({
   handleUpdateTaskStatus,
 }) {
   return (
-    <div className="completed-tasks-wrap mx-2 my-4">
+    <div
+      className="completed-tasks-wrap mx-2 my-4 "
+      style={isCompletedTasksOpen ? { height: '75%' } : { height: '' }}
+    >
       <Accordion
         defaultActiveKey="1"
         className={isCompletedTasksOpen ? 'h-100' : ''}

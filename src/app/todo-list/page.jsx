@@ -1,6 +1,8 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 import CompletedTask from './components/CompletedTask';
 import TaskItem from './components/TaskItem';
@@ -10,7 +12,7 @@ import Layout from './components/Layout';
 import '@/styles/todo-list/todo-list-body.css';
 
 function TodoList() {
-  const [task, setTtask] = useState('');
+  const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
@@ -19,14 +21,28 @@ function TodoList() {
     if (task.trim() !== '') {
       const data = { id: uuidv4(), label: task, status: 'active' };
       setTaskList((prevArray) => [...prevArray, data]);
-      setTtask('');
+      setTask('');
+
+      axios
+        .post('/api/todo-list', {
+          label: task,
+          status: 'active',
+        })
+        .then(() => {})
+        .catch((error) => {
+          if (error.response.status === 400) {
+            toast.error(error.response.data.error);
+          } else {
+            toast.error('something went wrong');
+          }
+        });
     }
   };
 
   const handleUpdateTaskStatus = (taskId, taskStatus) => {
     if (taskStatus === 'active') {
       const taskDetails = taskList.filter((e) => e.id === taskId)[0];
-
+      console.log('taskDetails : ', taskDetails);
       const filteredTasks = taskList.filter((e) => e.id !== taskId);
       taskDetails.status = 'completed';
 
@@ -46,43 +62,60 @@ function TodoList() {
   };
 
   useEffect(() => {
-    console.clear();
-    console.table(taskList);
-  }, [taskList]);
+    axios.get('/api/todo-list').then((response) => {
+      const tasks = response.data.tasks;
+      console.log('tasks : ', tasks);
+      const task_list = tasks.filter((e) => e.status === 'active');
+      const completed_tasks_list = tasks.filter(
+        (e) => e.status === 'completed'
+      );
+
+      setTaskList(task_list);
+      setCompletedTasks(completed_tasks_list);
+    });
+  }, []);
+
+  //   useEffect(() => {
+  //     console.clear();
+  //     console.table(taskList);
+  //   }, [taskList]);
 
   return (
-    <Layout>
-      <div className="todo-list-body-wrap">
-        <AddTask
-          handleAddToList={handleAddToList}
-          task={task}
-          setTtask={setTtask}
-        />
-        <div
-          className={`active-tasks mx-2 ${
-            isCompletedTasksOpen ? 'box' : 'box-expanded'
-          }`}
-        >
-          {[...taskList].reverse().map((task) => (
-            <TaskItem
-              key={task.id}
-              id={task.id}
-              label={task.label}
-              checked={false}
-              status={task.status}
-              handleUpdateTaskStatus={handleUpdateTaskStatus}
-            />
-          ))}
-        </div>
+    <>
+      <Layout>
+        <div className="todo-list-body-wrap">
+          <AddTask
+            handleAddToList={handleAddToList}
+            task={task}
+            setTask={setTask}
+          />
+          <div
+            className={`active-tasks mx-2 ${
+              isCompletedTasksOpen ? 'box' : 'box-expanded'
+            }`}
+          >
+            {[...taskList].reverse().map((task, index) => (
+              <TaskItem
+                key={index}
+                id={task.id}
+                label={task.label}
+                checked={false}
+                status={task.status}
+                handleUpdateTaskStatus={handleUpdateTaskStatus}
+              />
+            ))}
+          </div>
 
-        <CompletedTask
-          completedTasks={completedTasks}
-          isCompletedTasksOpen={isCompletedTasksOpen}
-          setIsCompletedTasksOpen={setIsCompletedTasksOpen}
-          handleUpdateTaskStatus={handleUpdateTaskStatus}
-        />
-      </div>
-    </Layout>
+          <CompletedTask
+            completedTasks={completedTasks}
+            isCompletedTasksOpen={isCompletedTasksOpen}
+            setIsCompletedTasksOpen={setIsCompletedTasksOpen}
+            handleUpdateTaskStatus={handleUpdateTaskStatus}
+          />
+        </div>
+      </Layout>
+      <Toaster />
+    </>
   );
 }
 

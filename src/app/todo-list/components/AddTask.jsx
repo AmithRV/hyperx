@@ -3,7 +3,7 @@ import React from 'react';
 
 import '@/styles/todo-list/add-task.css';
 
-function AddTask({ handleAddToList, task = '', setTtask }) {
+function AddTask({ handleAddToList, task = '', setTask }) {
   return (
     <div className="add-task-wrap mx-2 my-4">
       <form
@@ -17,7 +17,7 @@ function AddTask({ handleAddToList, task = '', setTtask }) {
           className="add-task-inpt w-100 h-100"
           placeholder="Add a task"
           onChange={(e) => {
-            setTtask(e.target.value);
+            setTask(e.target.value);
           }}
           value={task}
           autoFocus
