@@ -11,6 +11,7 @@ import AddTask from './components/AddTask';
 import Layout from './components/Layout';
 
 import '@/styles/todo-list/todo-list-body.css';
+import Loading from './components/Loading';
 
 function TodoList() {
   const [task, setTask] = useState('');
@@ -115,6 +116,9 @@ function TodoList() {
             task={task}
             setTask={setTask}
           />
+
+          <Loading />
+
           <div
             className={`active-tasks mx-2 ${
               isCompletedTasksOpen ? 'box' : 'box-expanded'
