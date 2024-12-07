@@ -18,17 +18,35 @@ function page() {
       link: '/todo-list',
     },
   ];
+
   return (
-    <div className="section-1 bg-dark">
-      {items.map((item) => (
-        <ItemCard
-          key={item.id}
-          label={item.label}
-          image={item.image}
-          link={item.link}
-        />
-      ))}
-    </div>
+    <>
+      <div className="section-1 bg-dark">
+        {items.map((item) => (
+          <ItemCard
+            key={item.id}
+            label={item.label}
+            image={item.image}
+            link={item.link}
+          />
+        ))}
+      </div>
+      <div
+        className="bg-black text-white d-flex justify-content-center align-items-center position-absolute"
+        style={{
+          width: '85px',
+          height: '60px',
+          borderRadius: '10px',
+          bottom: '20px',
+          right: '20px',
+          fontSize: '18px',
+          fontWeight: '800',
+          cursor: 'pointer',
+        }}
+      >
+        Logout
+      </div>
+    </>
   );
 }
 
