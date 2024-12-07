@@ -5,12 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 import CompletedTask from './components/CompletedTask';
+import TaskDetails from './components/TaskDetails';
 import TaskItem from './components/TaskItem';
 import AddTask from './components/AddTask';
 import Layout from './components/Layout';
 
 import '@/styles/todo-list/todo-list-body.css';
-import TaskDetails from './components/TaskDetails';
 
 function TodoList() {
   const [task, setTask] = useState('');
@@ -137,6 +137,7 @@ function TodoList() {
         isVisible={show.isVisible && show.type === 'task-details'}
         title={show.data.label}
         status={show.data.status}
+        createdAt={show.data.createdAt}
         handleClose={handleClose}
       />
     </>

@@ -9,6 +9,12 @@ const taskSchema = new Schema({
     type: String,
     require: [true, 'Please provide a userid'],
   },
+  createdAt: {
+    type: Date,
+  },
+  completedAt: {
+    type: Date,
+  },
 });
 
 const Task = mongoose.models.tasks || mongoose.model('tasks', taskSchema);

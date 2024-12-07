@@ -11,7 +11,7 @@ export async function POST(request) {
     const { label, status } = reqBody;
 
     //Add task to the db
-    const newTask = new Task({ label, status });
+    const newTask = new Task({ label, status, createdAt: new Date() });
     const savedTask = await newTask.save();
 
     return NextResponse.json({
@@ -34,6 +34,7 @@ export async function GET() {
       id: task._id,
       label: task.label,
       status: task.status,
+      createdAt: task.createdAt,
     }));
 
     return NextResponse.json({
