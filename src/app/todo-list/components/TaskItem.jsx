@@ -20,12 +20,7 @@ function TaskItem({
         }}
         checked={checked}
       />
-      <label
-        className="mx-2 w-100"
-        onClick={() => {
-          handleShow(id);
-        }}
-      >
+      <label className="mx-2 w-100" onClick={handleShow}>
         {label}
       </label>
     </div>

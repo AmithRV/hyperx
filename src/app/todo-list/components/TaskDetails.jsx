@@ -1,7 +1,13 @@
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import Badge from 'react-bootstrap/Badge';
 import React from 'react';
 
-function TaskDetails({ isVisible = false, handleClose }) {
+function TaskDetails({
+  isVisible = false,
+  title = '',
+  status = '',
+  handleClose,
+}) {
   return (
     <Offcanvas
       show={isVisible}
@@ -10,11 +16,16 @@ function TaskDetails({ isVisible = false, handleClose }) {
       placement="end"
     >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+        <Offcanvas.Title>{title}</Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body>
-        Some text as placeholder. In real life you can have the elements you
-        have chosen. Like, text, images, lists, etc.
+      <Offcanvas.Body className="pt-0">
+        <div className="flex-direction: column;">
+          <div className="my-2">
+            <Badge pill bg={status === 'active' ? 'danger' : 'success'}>
+              {status}
+            </Badge>
+          </div>
+        </div>
       </Offcanvas.Body>
     </Offcanvas>
   );

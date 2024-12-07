@@ -38,7 +38,9 @@ function CompletedTask({
                 checked={true}
                 status={task.status}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
-                handleShow={handleShow}
+                handleShow={() => {
+                  handleShow(task);
+                }}
               />
             ))}
           </Accordion.Body>

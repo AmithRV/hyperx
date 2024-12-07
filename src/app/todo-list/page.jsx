@@ -24,8 +24,8 @@ function TodoList() {
     setShow({ isVisible: false, type: '', data: {} });
   };
 
-  const handleShow = (taskId) => {
-    setShow({ isVisible: true, type: 'task-details', data: {} });
+  const handleShow = (task) => {
+    setShow({ isVisible: true, type: 'task-details', data: task });
   };
 
   const handleAddToList = (task) => {
@@ -88,6 +88,10 @@ function TodoList() {
     });
   }, []);
 
+  useEffect(() => {
+    console.clear();
+    console.log('show : ', show);
+  }, [show]);
   return (
     <>
       <Layout>
@@ -110,7 +114,9 @@ function TodoList() {
                 checked={false}
                 status={task.status}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
-                handleShow={handleShow}
+                handleShow={() => {
+                  handleShow(task);
+                }}
               />
             ))}
           </div>
@@ -129,6 +135,8 @@ function TodoList() {
 
       <TaskDetails
         isVisible={show.isVisible && show.type === 'task-details'}
+        title={show.data.label}
+        status={show.data.status}
         handleClose={handleClose}
       />
     </>
