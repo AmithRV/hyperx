@@ -1,9 +1,12 @@
-import React from 'react';
+'use client';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 import '@/styles/dashboard/dashboard.css';
 import ItemCard from './components/ItemCard';
 
-function page() {
+function Dashboard() {
   const items = [
     {
       id: 1,
@@ -18,18 +21,54 @@ function page() {
       link: '/todo-list',
     },
   ];
+
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = () => {
+    setLoading(true);
+    axios
+      .get('/api/auth/logout')
+      .then(() => {
+        router.push('/auth/login');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
-    <div className="section-1 bg-dark">
-      {items.map((item) => (
-        <ItemCard
-          key={item.id}
-          label={item.label}
-          image={item.image}
-          link={item.link}
-        />
-      ))}
-    </div>
+    <>
+      <div className="section-1 bg-dark">
+        {items.map((item) => (
+          <ItemCard
+            key={item.id}
+            label={item.label}
+            image={item.image}
+            link={item.link}
+          />
+        ))}
+      </div>
+      <button
+        className="bg-black text-white d-flex justify-content-center align-items-center position-absolute"
+        style={{
+          width: '100px',
+          height: '45px',
+          borderRadius: '10px',
+          bottom: '20px',
+          right: '20px',
+          fontSize: '18px',
+          fontWeight: '800',
+          cursor: 'pointer',
+          border: 'none',
+        }}
+        onClick={handleLogout}
+        disabled={loading}
+      >
+        {loading ? 'loading...' : 'Logout'}
+      </button>
+    </>
   );
 }
 
-export default page;
+export default Dashboard;

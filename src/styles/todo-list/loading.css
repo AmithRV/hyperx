@@ -1,0 +1,36 @@
+.Charts_loading-page_loader-wrapper---C7bYe {
+    height: 12rem;
+    width: 24rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -6rem;
+    margin-left: -12rem;
+}
+
+.Charts_loading-page_loader-image---mKFFA {
+    background: transparent url(../../../public/images/loader-light.gif) center / 100% no-repeat;
+    height: 6rem;
+    width: 6rem;
+    margin: auto;
+}
+
+.Charts_loading-page_loader-text---RUCxa {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin-top: 0.5rem;
+}
+
+.Charts_typography_body--regular---BRC0b {
+    font-weight: 400;
+}
+
+.leafygreen-ui-1yli3c0 {
+    margin: unset;
+    font-family: "Euclid Circular A", Akzidenz, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 20px;
+    color: white;
+    font-weight: 400;
+}
