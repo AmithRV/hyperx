@@ -35,6 +35,7 @@ export async function GET() {
       label: task.label,
       status: task.status,
       createdAt: task.createdAt,
+      completedAt: task.completedAt,
     }));
 
     return NextResponse.json({
@@ -61,10 +62,17 @@ export async function PATCH(request) {
 
     // Update status
     task.status = status;
+
+    if (status === 'active') {
+      task.completedAt = '';
+    } else {
+      task.completedAt = new Date();
+    }
+
     await task.save();
 
     return NextResponse.json({
-      message: 'Task completed successfully',
+      message: 'Task updated successfully',
       task: {
         id: task._id,
         title: task.title,

@@ -9,6 +9,7 @@ function TaskDetails({
   title = '',
   status = '',
   createdAt = '',
+  completedAt = '',
   handleClose,
 }) {
   return (
@@ -43,15 +44,21 @@ function TaskDetails({
                 />
               </InputGroup>
 
-              <InputGroup className="mb-3">
-                <InputGroup.Text
-                  id="basic-addon1"
-                  className="bg-dark text-white"
-                >
-                  Completed at
-                </InputGroup.Text>
-                <Form.Control className="bg-dark text-white" readOnly />
-              </InputGroup>
+              {completedAt && (
+                <InputGroup className="mb-3">
+                  <InputGroup.Text
+                    id="basic-addon1"
+                    className="bg-dark text-white"
+                  >
+                    Completed at
+                  </InputGroup.Text>
+                  <Form.Control
+                    className="bg-dark text-white"
+                    readOnly
+                    value={completedAt}
+                  />
+                </InputGroup>
+              )}
             </div>
           </div>
         </div>

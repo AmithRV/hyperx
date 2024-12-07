@@ -88,10 +88,6 @@ function TodoList() {
     });
   }, []);
 
-  useEffect(() => {
-    console.clear();
-    console.log('show : ', show);
-  }, [show]);
   return (
     <>
       <Layout>
@@ -138,6 +134,7 @@ function TodoList() {
         title={show.data.label}
         status={show.data.status}
         createdAt={show.data.createdAt}
+        completedAt={show.data.completedAt}
         handleClose={handleClose}
       />
     </>
