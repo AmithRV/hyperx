@@ -11,7 +11,7 @@ export async function POST(request) {
     const { label, status } = reqBody;
 
     //Add task to the db
-    const newTask = new Task({ label, status });
+    const newTask = new Task({ label, status, createdAt: new Date() });
     const savedTask = await newTask.save();
 
     return NextResponse.json({
@@ -34,6 +34,8 @@ export async function GET() {
       id: task._id,
       label: task.label,
       status: task.status,
+      createdAt: task.createdAt,
+      completedAt: task.completedAt,
     }));
 
     return NextResponse.json({
@@ -60,16 +62,58 @@ export async function PATCH(request) {
 
     // Update status
     task.status = status;
+
+    if (status === 'active') {
+      task.completedAt = '';
+    } else {
+      task.completedAt = new Date();
+    }
+
     await task.save();
 
     return NextResponse.json({
-      message: 'Task completed successfully',
+      message: 'Task updated successfully',
       task: {
         id: task._id,
         title: task.title,
         status: task.status,
       },
     });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    // Extract taskId from the URL search params
+    const { searchParams } = new URL(request.url);
+    const taskId = searchParams.get('taskId');
+
+    if (!taskId) {
+      return NextResponse.json(
+        { error: 'Task ID is required' },
+        { status: 400 }
+      );
+    }
+
+    // Check if task exists
+    const task = await Task.findOne({ _id: taskId });
+
+    if (!task) {
+      return NextResponse.json({ error: 'Task not found' }, { status: 400 });
+    }
+
+    // Delete the task from the database
+    const deletedTask = await Task.deleteOne({ _id: taskId });
+
+    return NextResponse.json(
+      {
+        message: 'Task deleted successfully',
+        task: deletedTask,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

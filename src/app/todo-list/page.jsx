@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 import CompletedTask from './components/CompletedTask';
+import TaskDetails from './components/TaskDetails';
 import TaskItem from './components/TaskItem';
 import AddTask from './components/AddTask';
 import Layout from './components/Layout';
@@ -16,6 +17,16 @@ function TodoList() {
   const [taskList, setTaskList] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
+
+  const [show, setShow] = useState({ isVisible: false, type: '', data: {} });
+
+  const handleClose = () => {
+    setShow({ isVisible: false, type: '', data: {} });
+  };
+
+  const handleShow = (task) => {
+    setShow({ isVisible: true, type: 'task-details', data: task });
+  };
 
   const handleAddToList = (task) => {
     if (task.trim() !== '') {
@@ -42,7 +53,6 @@ function TodoList() {
   const handleUpdateTaskStatus = (taskId, taskStatus) => {
     if (taskStatus === 'active') {
       const taskDetails = taskList.filter((e) => e.id === taskId)[0];
-      console.log('taskDetails : ', taskDetails);
       const filteredTasks = taskList.filter((e) => e.id !== taskId);
       taskDetails.status = 'completed';
 
@@ -65,10 +75,27 @@ function TodoList() {
     }
   };
 
+  const handleDeleteTask = () => {
+    const taskStatus = show.data.status;
+    const taskId = show.data.id;
+
+    if (taskStatus === 'active') {
+      const filteredData = taskList.filter((e) => e.id !== taskId);
+      setTaskList(filteredData);
+    } else if (taskStatus === 'completed') {
+      const filteredData = completedTasks.filter((e) => e.id !== taskId);
+      setCompletedTasks(filteredData);
+    }
+
+    handleClose();
+
+    const url = `/api/todo-list?taskId=${taskId}`;
+    axios.delete(url);
+  };
+
   useEffect(() => {
     axios.get('/api/todo-list').then((response) => {
       const tasks = response.data.tasks;
-      console.log('tasks : ', tasks);
       const task_list = tasks.filter((e) => e.status === 'active');
       const completed_tasks_list = tasks.filter(
         (e) => e.status === 'completed'
@@ -78,11 +105,6 @@ function TodoList() {
       setCompletedTasks(completed_tasks_list);
     });
   }, []);
-
-  //   useEffect(() => {
-  //     console.clear();
-  //     console.table(taskList);
-  //   }, [taskList]);
 
   return (
     <>
@@ -106,6 +128,9 @@ function TodoList() {
                 checked={false}
                 status={task.status}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
+                handleShow={() => {
+                  handleShow(task);
+                }}
               />
             ))}
           </div>
@@ -115,10 +140,22 @@ function TodoList() {
             isCompletedTasksOpen={isCompletedTasksOpen}
             setIsCompletedTasksOpen={setIsCompletedTasksOpen}
             handleUpdateTaskStatus={handleUpdateTaskStatus}
+            handleShow={handleShow}
           />
         </div>
       </Layout>
+
       <Toaster />
+
+      <TaskDetails
+        isVisible={show.isVisible && show.type === 'task-details'}
+        title={show.data.label}
+        status={show.data.status}
+        createdAt={show.data.createdAt}
+        completedAt={show.data.completedAt}
+        handleClose={handleClose}
+        handleDeleteTask={handleDeleteTask}
+      />
     </>
   );
 }

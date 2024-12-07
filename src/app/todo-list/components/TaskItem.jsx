@@ -9,6 +9,7 @@ function TaskItem({
   checked = false,
   status = '',
   handleUpdateTaskStatus,
+  handleShow,
 }) {
   return (
     <div className="task-item-wrap mx-2 my-2">
@@ -19,7 +20,9 @@ function TaskItem({
         }}
         checked={checked}
       />
-      <label className="mx-2">{label}</label>
+      <label className="mx-2 w-100" onClick={handleShow}>
+        {label}
+      </label>
     </div>
   );
 }
