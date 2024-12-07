@@ -130,7 +130,7 @@ function Signup() {
               {loading.state ? 'Loading' : 'Submit'}
             </button>
           </div>
-        </form>{' '}
+        </form>
       </div>
       <Toaster />
     </>
