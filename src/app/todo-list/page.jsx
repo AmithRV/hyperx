@@ -42,7 +42,6 @@ function TodoList() {
   const handleUpdateTaskStatus = (taskId, taskStatus) => {
     if (taskStatus === 'active') {
       const taskDetails = taskList.filter((e) => e.id === taskId)[0];
-      console.log('taskDetails : ', taskDetails);
       const filteredTasks = taskList.filter((e) => e.id !== taskId);
       taskDetails.status = 'completed';
 
@@ -68,7 +67,6 @@ function TodoList() {
   useEffect(() => {
     axios.get('/api/todo-list').then((response) => {
       const tasks = response.data.tasks;
-      console.log('tasks : ', tasks);
       const task_list = tasks.filter((e) => e.status === 'active');
       const completed_tasks_list = tasks.filter(
         (e) => e.status === 'completed'
@@ -78,11 +76,6 @@ function TodoList() {
       setCompletedTasks(completed_tasks_list);
     });
   }, []);
-
-  //   useEffect(() => {
-  //     console.clear();
-  //     console.table(taskList);
-  //   }, [taskList]);
 
   return (
     <>

@@ -26,6 +26,7 @@
     animation: colorfull-spin 2s infinite alternate;
     border-radius: 50%;
     position: absolute;
+    cursor: pointer;
 }
 
 @keyframes colorfull-spin {
