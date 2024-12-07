@@ -16,6 +16,7 @@ import Loading from './components/Loading';
 function TodoList() {
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
 
@@ -95,16 +96,22 @@ function TodoList() {
   };
 
   useEffect(() => {
-    axios.get('/api/todo-list').then((response) => {
-      const tasks = response.data.tasks;
-      const task_list = tasks.filter((e) => e.status === 'active');
-      const completed_tasks_list = tasks.filter(
-        (e) => e.status === 'completed'
-      );
+    setLoading(true);
+    axios
+      .get('/api/todo-list')
+      .then((response) => {
+        const tasks = response.data.tasks;
+        const task_list = tasks.filter((e) => e.status === 'active');
+        const completed_tasks_list = tasks.filter(
+          (e) => e.status === 'completed'
+        );
 
-      setTaskList(task_list);
-      setCompletedTasks(completed_tasks_list);
-    });
+        setTaskList(task_list);
+        setCompletedTasks(completed_tasks_list);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -117,7 +124,7 @@ function TodoList() {
             setTask={setTask}
           />
 
-          <Loading />
+          {loading && <Loading />}
 
           <div
             className={`active-tasks mx-2 ${
