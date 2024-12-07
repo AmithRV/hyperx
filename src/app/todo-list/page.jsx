@@ -79,16 +79,18 @@ function TodoList() {
     const taskStatus = show.data.status;
     const taskId = show.data.id;
 
-    if (taskStatus === 'active') {
-      const filteredData = taskList.filter((e) => e.id !== taskId);
-      setTaskList(filteredData);
-    } else if (taskStatus === 'completed') {
-      const filteredData = completedTasks.filter((e) => e.id !== taskId);
-      setCompletedTasks(filteredData);
-    }
+    // if (taskStatus === 'active') {
+    //   const filteredData = taskList.filter((e) => e.id !== taskId);
+    //   setTaskList(filteredData);
+    // } else if (taskStatus === 'completed') {
+    //   const filteredData = completedTasks.filter((e) => e.id !== taskId);
+    //   setCompletedTasks(filteredData);
+    // }
+
     handleClose();
-    // const filteredData = tas
-    // axios.delete('/api/todo-list', { params: { taskId: show.data.id } });
+
+    const url = `/api/todo-list?taskId=${taskId}`;
+    axios.delete(url);
   };
 
   useEffect(() => {
