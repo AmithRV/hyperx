@@ -99,6 +99,7 @@ export async function DELETE(request, { params }) {
 
     // Check if task exists
     const task = await Task.findOne({ _id: taskId });
+
     if (!task) {
       return NextResponse.json({ error: 'Task not found' }, { status: 400 });
     }
