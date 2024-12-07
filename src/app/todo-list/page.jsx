@@ -10,12 +10,23 @@ import AddTask from './components/AddTask';
 import Layout from './components/Layout';
 
 import '@/styles/todo-list/todo-list-body.css';
+import TaskDetails from './components/TaskDetails';
 
 function TodoList() {
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
+
+  const [show, setShow] = useState({ isVisible: false, type: '', data: {} });
+
+  const handleClose = () => {
+    setShow({ isVisible: false, type: '', data: {} });
+  };
+
+  const handleShow = (taskId) => {
+    setShow({ isVisible: true, type: 'task-details', data: {} });
+  };
 
   const handleAddToList = (task) => {
     if (task.trim() !== '') {
@@ -99,6 +110,7 @@ function TodoList() {
                 checked={false}
                 status={task.status}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
+                handleShow={handleShow}
               />
             ))}
           </div>
@@ -108,10 +120,17 @@ function TodoList() {
             isCompletedTasksOpen={isCompletedTasksOpen}
             setIsCompletedTasksOpen={setIsCompletedTasksOpen}
             handleUpdateTaskStatus={handleUpdateTaskStatus}
+            handleShow={handleShow}
           />
         </div>
       </Layout>
+
       <Toaster />
+
+      <TaskDetails
+        isVisible={show.isVisible && show.type === 'task-details'}
+        handleClose={handleClose}
+      />
     </>
   );
 }

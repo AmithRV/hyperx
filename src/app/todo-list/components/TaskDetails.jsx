@@ -1,0 +1,23 @@
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import React from 'react';
+
+function TaskDetails({ isVisible = false, handleClose }) {
+  return (
+    <Offcanvas
+      show={isVisible}
+      onHide={handleClose}
+      className="bg-dark text-white"
+      placement="end"
+    >
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        Some text as placeholder. In real life you can have the elements you
+        have chosen. Like, text, images, lists, etc.
+      </Offcanvas.Body>
+    </Offcanvas>
+  );
+}
+
+export default TaskDetails;

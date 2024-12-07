@@ -10,6 +10,7 @@ function CompletedTask({
   isCompletedTasksOpen,
   setIsCompletedTasksOpen,
   handleUpdateTaskStatus,
+  handleShow,
 }) {
   return (
     <div
@@ -37,6 +38,7 @@ function CompletedTask({
                 checked={true}
                 status={task.status}
                 handleUpdateTaskStatus={handleUpdateTaskStatus}
+                handleShow={handleShow}
               />
             ))}
           </Accordion.Body>
