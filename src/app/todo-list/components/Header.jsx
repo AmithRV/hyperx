@@ -18,8 +18,8 @@ function Header({ activeTaskCount = '', completedTaskCount = '' }) {
           }}
         ></div>
       </div>
-      <div className="mx-4">
-        <div className="mx-4">
+      <div className="section-details">
+        <div className="w-100 d-flex justify-content-around align-items-center">
           <Button variant="dark">
             Pending{' '}
             <Badge bg="light" className="text-dark mx-2">
@@ -27,7 +27,7 @@ function Header({ activeTaskCount = '', completedTaskCount = '' }) {
             </Badge>
           </Button>
 
-          <Button variant="dark" className="mx-4">
+          <Button variant="dark">
             Completed{' '}
             <Badge bg="light" className="text-dark mx-2">
               {completedTaskCount}
