@@ -2,10 +2,13 @@ import React from 'react';
 
 import Header from './Header';
 
-function Layout({ children }) {
+function Layout({ activeTaskCount = '', completedTaskCount = '', children }) {
   return (
     <>
-      <Header />
+      <Header
+        activeTaskCount={activeTaskCount}
+        completedTaskCount={completedTaskCount}
+      />
       {children}
     </>
   );

@@ -116,7 +116,10 @@ function TodoList() {
 
   return (
     <>
-      <Layout>
+      <Layout
+        activeTaskCount={taskList.length}
+        completedTaskCount={completedTasks.length}
+      >
         <div className="todo-list-body-wrap">
           <AddTask
             handleAddToList={handleAddToList}
