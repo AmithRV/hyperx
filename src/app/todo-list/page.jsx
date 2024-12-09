@@ -6,12 +6,12 @@ import axios from 'axios';
 
 import CompletedTask from './components/CompletedTask';
 import TaskDetails from './components/TaskDetails';
-import TaskItem from './components/TaskItem';
+import ActiveTasks from './components/ActiveTasks';
 import AddTask from './components/AddTask';
+import Loading from './components/Loading';
 import Layout from './components/Layout';
 
 import '@/styles/todo-list/todo-list-body.css';
-import Loading from './components/Loading';
 
 function TodoList() {
   const [task, setTask] = useState('');
@@ -116,7 +116,10 @@ function TodoList() {
 
   return (
     <>
-      <Layout>
+      <Layout
+        activeTaskCount={taskList.length}
+        completedTaskCount={completedTasks.length}
+      >
         <div className="todo-list-body-wrap">
           <AddTask
             handleAddToList={handleAddToList}
@@ -126,25 +129,12 @@ function TodoList() {
 
           {loading && <Loading />}
 
-          <div
-            className={`active-tasks mx-2 ${
-              isCompletedTasksOpen ? 'box' : 'box-expanded'
-            }`}
-          >
-            {[...taskList].reverse().map((task, index) => (
-              <TaskItem
-                key={index}
-                id={task.id}
-                label={task.label}
-                checked={false}
-                status={task.status}
-                handleUpdateTaskStatus={handleUpdateTaskStatus}
-                handleShow={() => {
-                  handleShow(task);
-                }}
-              />
-            ))}
-          </div>
+          <ActiveTasks
+            isCompletedTasksOpen={isCompletedTasksOpen}
+            taskList={taskList}
+            handleShow={handleShow}
+            handleUpdateTaskStatus={handleUpdateTaskStatus}
+          />
 
           <CompletedTask
             completedTasks={completedTasks}
