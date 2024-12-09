@@ -1,6 +1,7 @@
 import { useRouter } from 'next/navigation';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
+import Image from 'next/image';
 import React from 'react';
 
 import '@/styles/todo-list/header.css';
@@ -33,6 +34,17 @@ function Header({ activeTaskCount = '', completedTaskCount = '' }) {
               {completedTaskCount}
             </Badge>
           </Button>
+
+          <Image
+            src="/svg/category.svg"
+            width={40}
+            height={40}
+            alt=""
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              router.push('/todo-list/categories');
+            }}
+          />
         </div>
       </div>
     </div>
