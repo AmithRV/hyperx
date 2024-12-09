@@ -29,6 +29,13 @@
     cursor: pointer;
 }
 
+.section-details {
+    margin-left: 15px;
+    margin-right: 15px;
+    width: calc(100% - 40px);
+
+}
+
 @keyframes colorfull-spin {
     0% {
         background-position: 0 50%;
