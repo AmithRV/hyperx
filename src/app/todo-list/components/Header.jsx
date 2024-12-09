@@ -4,6 +4,8 @@ import Badge from 'react-bootstrap/Badge';
 import React from 'react';
 
 import '@/styles/todo-list/header.css';
+import Link from 'next/link';
+import Image from 'next/image';
 
 function Header({ activeTaskCount = '', completedTaskCount = '' }) {
   const router = useRouter();
@@ -33,6 +35,8 @@ function Header({ activeTaskCount = '', completedTaskCount = '' }) {
               {completedTaskCount}
             </Badge>
           </Button>
+
+          <Image src="/svg/category.svg" width={40} height={40} alt="" />
         </div>
       </div>
     </div>
