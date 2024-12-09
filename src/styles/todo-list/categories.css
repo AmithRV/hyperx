@@ -1,9 +1,11 @@
 .categories-wrap {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 70px);
     background-color: black;
     color: white;
     padding: 10px;
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 .accordion-button {

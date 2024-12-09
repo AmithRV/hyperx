@@ -1,7 +1,9 @@
 'use client';
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
-import React, { useState } from 'react';
+import React from 'react';
+
+import Layout from '../components/Layout';
 
 import '@/styles/todo-list/categories.css';
 
@@ -39,22 +41,24 @@ function Categories() {
     },
   ];
   return (
-    <div className="categories-wrap">
-      <Accordion>
-        {data.map((e, index) => (
-          <Accordion.Item key={e.id} eventKey={index}>
-            <Accordion.Header>{e.label}</Accordion.Header>
-            <Accordion.Body>
-              <ListGroup>
-                {e.tasks.map((task) => (
-                  <ListGroup.Item key={task.id}>{task.label}</ListGroup.Item>
-                ))}
-              </ListGroup>
-            </Accordion.Body>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-    </div>
+    <Layout navigationVisible={false}>
+      <div className="categories-wrap">
+        <Accordion>
+          {data.map((e, index) => (
+            <Accordion.Item key={e.id} eventKey={index}>
+              <Accordion.Header>{e.label}</Accordion.Header>
+              <Accordion.Body>
+                <ListGroup>
+                  {e.tasks.map((task) => (
+                    <ListGroup.Item key={task.id}>{task.label}</ListGroup.Item>
+                  ))}
+                </ListGroup>
+              </Accordion.Body>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </div>
+    </Layout>
   );
 }
 

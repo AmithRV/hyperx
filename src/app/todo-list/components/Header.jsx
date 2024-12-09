@@ -6,7 +6,11 @@ import React from 'react';
 
 import '@/styles/todo-list/header.css';
 
-function Header({ activeTaskCount = '', completedTaskCount = '' }) {
+function Header({
+  activeTaskCount = '',
+  completedTaskCount = '',
+  navigationVisible = true,
+}) {
   const router = useRouter();
 
   return (
@@ -44,6 +48,7 @@ function Header({ activeTaskCount = '', completedTaskCount = '' }) {
             onClick={() => {
               router.push('/todo-list/categories');
             }}
+            className={navigationVisible ? '' : 'd-none'}
           />
         </div>
       </div>
