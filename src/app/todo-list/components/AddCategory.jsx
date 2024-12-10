@@ -2,9 +2,15 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-import React from 'react';
+import React, { useState } from 'react';
 
-function AddCategory({ show = false, handleClose, handleAddCategory }) {
+function AddCategory({
+  show = false,
+  categoryName = '',
+  setCategoryName,
+  handleClose,
+  handleAddCategory,
+}) {
   return (
     <Modal show={show} onHide={handleClose} className="bg-dark">
       <Modal.Header closeButton>
@@ -14,7 +20,15 @@ function AddCategory({ show = false, handleClose, handleAddCategory }) {
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Label</Form.Label>
-            <Form.Control type="string" placeholder="..." autoFocus />
+            <Form.Control
+              type="string"
+              placeholder="..."
+              autoFocus
+              value={categoryName}
+              onChange={(e) => {
+                setCategoryName(e.target.value);
+              }}
+            />
           </Form.Group>
         </Form>
       </Modal.Body>

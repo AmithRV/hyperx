@@ -12,6 +12,7 @@ import Loading from './components/Loading';
 import Layout from './components/Layout';
 
 import '@/styles/todo-list/todo-list-body.css';
+import AddCategory from './components/AddCategory';
 
 function TodoList() {
   const [task, setTask] = useState('');
@@ -23,6 +24,7 @@ function TodoList() {
     { id: 3, label: 'Category-2' },
     { id: 4, label: 'Category-3' },
   ]);
+  const [categoryName, setCategoryName] = useState('');
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
   const [show, setShow] = useState({ isVisible: false, type: '', data: {} });
@@ -175,9 +177,17 @@ function TodoList() {
         createdAt={show.data.createdAt}
         completedAt={show.data.completedAt}
         categories={categories}
+        setShow={setShow}
         handleClose={handleClose}
         handleDeleteTask={handleDeleteTask}
         handleCategoryChange={handleCategoryChange}
+      />
+
+      <AddCategory
+        show={show.isVisible && show.type === 'add-category'}
+        categoryName={categoryName}
+        setCategoryName={setCategoryName}
+        handleClose={handleClose}
         handleAddCategory={handleAddCategory}
       />
     </>
