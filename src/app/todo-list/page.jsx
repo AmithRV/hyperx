@@ -104,6 +104,8 @@ function TodoList() {
     console.log('categoryId : ', categoryId);
   };
 
+  const handleAddCategory = () => {};
+
   useEffect(() => {
     // Load todo-list -- start
     setLoading(true);
@@ -176,6 +178,7 @@ function TodoList() {
         handleClose={handleClose}
         handleDeleteTask={handleDeleteTask}
         handleCategoryChange={handleCategoryChange}
+        handleAddCategory={handleAddCategory}
       />
     </>
   );
