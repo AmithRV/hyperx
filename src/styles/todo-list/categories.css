@@ -41,3 +41,7 @@
 .accordion-button:not(.collapsed) {
     box-shadow: none;
 }
+
+.accordion-collapse {
+    overflow: hidden;
+}
