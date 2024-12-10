@@ -6,6 +6,7 @@ import React from 'react';
 import Layout from '../components/Layout';
 
 import '@/styles/todo-list/categories.css';
+import Image from 'next/image';
 
 function Categories() {
   const data = [
@@ -46,7 +47,12 @@ function Categories() {
         <Accordion>
           {data.map((e, index) => (
             <Accordion.Item key={e.id} eventKey={index}>
-              <Accordion.Header>{e.label}</Accordion.Header>
+              <Accordion.Header>
+                <div className="w-100 d-flex align-items-center">
+                  <Image src="/svg/folder.svg" alt="" width={25} height={25} />
+                  <span className="mx-2">{e.label}</span>
+                </div>
+              </Accordion.Header>
               <Accordion.Body>
                 <ListGroup>
                   {e.tasks.map((task) => (

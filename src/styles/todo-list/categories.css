@@ -12,6 +12,7 @@
     color: white !important;
     background-color: black !important;
     border-bottom: 1px solid #95989d !important;
+    padding: 8px;
 }
 
 .accordion-body {
