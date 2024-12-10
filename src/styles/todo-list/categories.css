@@ -1,6 +1,47 @@
 .categories-wrap {
     width: 100vw;
-    height: 100vh;
-    background-color: #121212;
+    height: calc(100vh - 70px);
+    background-color: black;
     color: white;
+    padding: 10px;
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+.accordion-button {
+    color: white !important;
+    background-color: black !important;
+    border-bottom: 1px solid #95989d !important;
+}
+
+.accordion-body {
+    color: white;
+    background-color: black;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.list-group-item {
+    background-color: black;
+    color: white;
+    border: 1px solid #95989d;
+}
+
+.accordion-button::after {
+    background-image: none !important;
+}
+
+.accordion-item {
+    border: 1px solid #95989d !important;
+    margin-top: 5px;
+}
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none;
+}
+
+.accordion-collapse {
+    overflow: hidden;
 }
