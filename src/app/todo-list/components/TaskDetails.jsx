@@ -1,3 +1,4 @@
+'use client';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';

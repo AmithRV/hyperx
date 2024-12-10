@@ -18,12 +18,7 @@ function TodoList() {
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([
-    { id: 1, label: 'General' },
-    { id: 2, label: 'Category-1' },
-    { id: 3, label: 'Category-2' },
-    { id: 4, label: 'Category-3' },
-  ]);
+  const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState('');
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
@@ -114,8 +109,14 @@ function TodoList() {
         .post('/api/todo-list/categories', {
           label: categoryName,
         })
-        .then(() => {
+        .then((response) => {
           setCategoryName('');
+          console.log('response : ', response.data.category);
+          const newCategory = response.data.category;
+          setCategories((prevArray) => [
+            ...prevArray,
+            { id: newCategory.id, label: newCategory.label },
+          ]);
         })
         .catch((error) => {
           if (error.response.status === 400) {
@@ -125,7 +126,6 @@ function TodoList() {
           }
         })
         .finally(() => {
-          console.log('show : ', show);
           setLoading(false);
           setShow((prevState) => ({
             isVisible: true,
@@ -169,10 +169,10 @@ function TodoList() {
     // Load categories -- end
   }, []);
 
-  useEffect(() => {
-    console.clear();
-    console.log('show : ', show);
-  }, [show]);
+  // useEffect(() => {
+  //   console.clear();
+  //   console.log('show : ', show);
+  // }, [show]);
 
   return (
     <>
