@@ -47,7 +47,7 @@ function TaskDetails({
               <div className="category-wrap d-flex justify-content-between align-items-center w-100 bg-black mx-2">
                 <Form.Select
                   aria-label="Default select example"
-                  className="mx-4 py-0 bg-black text-white category-select"
+                  className="mx-0 py-0 bg-black text-white category-select"
                   onChange={(e) => {
                     handleCategoryChange(e.target.value);
                   }}

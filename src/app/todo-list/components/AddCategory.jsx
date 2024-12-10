@@ -13,7 +13,7 @@ function AddCategory({
   handleAddCategory,
 }) {
   return (
-    <Modal show={show} onHide={handleClose} className="bg-dark">
+    <Modal show={show} onHide={handleClose} className="">
       <Modal.Header closeButton>
         <Modal.Title className="tee"> Category</Modal.Title>
       </Modal.Header>
