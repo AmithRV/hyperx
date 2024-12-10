@@ -2,11 +2,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 function AddCategory({
   show = false,
   categoryName = '',
+  loading = false,
   setCategoryName,
   handleClose,
   handleAddCategory,
@@ -33,8 +34,13 @@ function AddCategory({
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="dark" onClick={handleAddCategory} className="w-100">
-          Add
+        <Button
+          variant="dark"
+          onClick={handleAddCategory}
+          className="w-100"
+          disabled={loading}
+        >
+          {loading ? 'Adding...' : 'Add'}
         </Button>
       </Modal.Footer>
     </Modal>

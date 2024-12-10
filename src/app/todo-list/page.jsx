@@ -106,7 +106,29 @@ function TodoList() {
     console.log('categoryId : ', categoryId);
   };
 
-  const handleAddCategory = () => {};
+  const handleAddCategory = () => {
+    if (categoryName.trim() !== '') {
+      setLoading(true);
+
+      axios
+        .post('/api/todo-list/categories', {
+          title: categoryName,
+        })
+        .then(() => {
+          setCategoryName('');
+        })
+        .catch((error) => {
+          if (error.response.status === 400) {
+            toast.error(error.response.data.error);
+          } else {
+            toast.error('something went wrong');
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  };
 
   useEffect(() => {
     // Load todo-list -- start
@@ -186,6 +208,7 @@ function TodoList() {
       <AddCategory
         show={show.isVisible && show.type === 'add-category'}
         categoryName={categoryName}
+        loading={loading}
         setCategoryName={setCategoryName}
         handleClose={handleClose}
         handleAddCategory={handleAddCategory}
