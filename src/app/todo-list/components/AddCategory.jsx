@@ -18,7 +18,12 @@ function AddCategory({
         <Modal.Title className="tee"> Category</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form>
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleAddCategory();
+          }}
+        >
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Label</Form.Label>
             <Form.Control

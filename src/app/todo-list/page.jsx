@@ -112,7 +112,7 @@ function TodoList() {
 
       axios
         .post('/api/todo-list/categories', {
-          title: categoryName,
+          label: categoryName,
         })
         .then(() => {
           setCategoryName('');
@@ -126,6 +126,7 @@ function TodoList() {
         })
         .finally(() => {
           setLoading(false);
+          handleClose();
         });
     }
   };
