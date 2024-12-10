@@ -105,6 +105,7 @@ function TodoList() {
   };
 
   useEffect(() => {
+    // Load todo-list -- start
     setLoading(true);
     axios
       .get('/api/todo-list')
@@ -121,6 +122,14 @@ function TodoList() {
       .finally(() => {
         setLoading(false);
       });
+    // Load todo-list -- end
+
+    // Load categories -- start
+    axios.get('/api/todo-list/categories').then((response) => {
+      console.log('response : ', response.data.categories);
+      setCategories(response.data.categories);
+    });
+    // Load categories -- end
   }, []);
 
   return (
