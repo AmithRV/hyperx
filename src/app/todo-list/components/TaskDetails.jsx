@@ -14,8 +14,10 @@ function TaskDetails({
   status = '',
   createdAt = '',
   completedAt = '',
+  categories = [],
   handleClose,
   handleDeleteTask,
+  handleCategoryChange,
 }) {
   return (
     <Offcanvas
@@ -38,11 +40,15 @@ function TaskDetails({
               <Form.Select
                 aria-label="Default select example"
                 className="mx-4 py-0 bg-black text-white category-select"
+                onChange={(e) => {
+                  handleCategoryChange(e.target.value);
+                }}
               >
-                <option>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {categories.map((category) => (
+                  <option value={category.id} key={category.id}>
+                    {category.label}
+                  </option>
+                ))}
               </Form.Select>
             </div>
 

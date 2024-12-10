@@ -17,9 +17,14 @@ function TodoList() {
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([
+    { id: 1, label: 'General' },
+    { id: 2, label: 'Category-1' },
+    { id: 3, label: 'Category-2' },
+    { id: 4, label: 'Category-3' },
+  ]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
-
   const [show, setShow] = useState({ isVisible: false, type: '', data: {} });
 
   const handleClose = () => {
@@ -95,6 +100,10 @@ function TodoList() {
     axios.delete(url);
   };
 
+  const handleCategoryChange = (categoryId) => {
+    console.log('categoryId : ', categoryId);
+  };
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -154,8 +163,10 @@ function TodoList() {
         status={show.data.status}
         createdAt={show.data.createdAt}
         completedAt={show.data.completedAt}
+        categories={categories}
         handleClose={handleClose}
         handleDeleteTask={handleDeleteTask}
+        handleCategoryChange={handleCategoryChange}
       />
     </>
   );
