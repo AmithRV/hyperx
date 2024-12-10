@@ -4,6 +4,7 @@ const categorySchema = new Schema({
   label: {
     type: String,
     require: [true, 'Please provide a name'],
+    unique: true,
   },
 });
 

@@ -125,8 +125,18 @@ function TodoList() {
           }
         })
         .finally(() => {
+          console.log('show : ', show);
           setLoading(false);
-          handleClose();
+          setShow((prevState) => ({
+            isVisible: true,
+            type: 'task-details',
+            data: {
+              id: prevState.data.categoryDetails.id,
+              label: prevState.data.categoryDetails.title,
+              status: prevState.data.categoryDetails.status,
+              createdAt: prevState.data.categoryDetails.createdAt,
+            },
+          }));
         });
     }
   };
@@ -158,6 +168,11 @@ function TodoList() {
     });
     // Load categories -- end
   }, []);
+
+  useEffect(() => {
+    console.clear();
+    console.log('show : ', show);
+  }, [show]);
 
   return (
     <>
@@ -195,6 +210,7 @@ function TodoList() {
 
       <TaskDetails
         isVisible={show.isVisible && show.type === 'task-details'}
+        id={show.data.id}
         title={show.data.label}
         status={show.data.status}
         createdAt={show.data.createdAt}

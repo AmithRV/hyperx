@@ -10,6 +10,7 @@ import '@/styles/todo-list/task-details.css';
 
 function TaskDetails({
   isVisible = false,
+  id = '',
   title = '',
   status = '',
   createdAt = '',
@@ -20,12 +21,6 @@ function TaskDetails({
   handleDeleteTask,
   handleCategoryChange,
 }) {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
-
   return (
     <Offcanvas
       show={isVisible}
@@ -68,7 +63,15 @@ function TaskDetails({
                     setShow({
                       isVisible: true,
                       type: 'add-category',
-                      data: {},
+                      data: {
+                        categoryDetails: {
+                          id,
+                          title,
+                          status,
+                          createdAt,
+                          completedAt,
+                        },
+                      },
                     });
                   }}
                 />
