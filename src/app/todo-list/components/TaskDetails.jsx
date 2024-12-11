@@ -50,7 +50,7 @@ function TaskDetails({
                   onChange={(e) => {
                     handleCategoryChange(e.target.value, id, status);
                   }}
-                  value={categoryId}
+                  defaultValue={categoryId}
                 >
                   {categories.map((category) => (
                     <option value={category.id} key={category.id}>
