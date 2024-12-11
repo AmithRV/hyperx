@@ -11,7 +11,16 @@ export async function POST(request) {
     const { label, status } = reqBody;
 
     //Add task to the db
-    const newTask = new Task({ label, status, createdAt: new Date() });
+    const newTask = new Task({
+      label,
+      status,
+      createdAt: new Date(),
+      categoryId: process.env.GENERAL_TASKS_ID,
+    });
+
+    console.log('pop : ', process.env.GENERAL_TASKS_ID);
+    console.log('newTask : ', newTask);
+    //
     const savedTask = await newTask.save();
 
     return NextResponse.json({
@@ -36,6 +45,7 @@ export async function GET() {
       status: task.status,
       createdAt: task.createdAt,
       completedAt: task.completedAt,
+      categoryId: task.categoryId,
     }));
 
     return NextResponse.json({
@@ -50,7 +60,7 @@ export async function GET() {
 export async function PATCH(request) {
   try {
     const reqBody = await request.json();
-    const { taskId, status } = reqBody;
+    const { taskId, status, categoryId } = reqBody;
 
     // Find the specific task
     const task = await Task.findById({ _id: taskId });
@@ -62,6 +72,7 @@ export async function PATCH(request) {
 
     // Update status
     task.status = status;
+    task.categoryId = categoryId;
 
     if (status === 'active') {
       task.completedAt = '';
@@ -77,6 +88,7 @@ export async function PATCH(request) {
         id: task._id,
         title: task.title,
         status: task.status,
+        categoryId: task.categoryId,
       },
     });
   } catch (error) {

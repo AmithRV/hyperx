@@ -43,3 +43,11 @@ export async function POST(request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function PATCH(request) {
+  try {
+    //
+  } catch (error) {
+    //
+  }
+}

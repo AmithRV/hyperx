@@ -97,8 +97,12 @@ function TodoList() {
     axios.delete(url);
   };
 
-  const handleCategoryChange = (categoryId) => {
-    console.log('categoryId : ', categoryId);
+  const handleCategoryChange = (categoryId, taskId, status) => {
+    axios.patch('/api/todo-list', {
+      taskId,
+      status,
+      categoryId,
+    });
   };
 
   const handleAddCategory = () => {
@@ -111,11 +115,10 @@ function TodoList() {
         })
         .then((response) => {
           setCategoryName('');
-          console.log('response : ', response.data.category);
           const newCategory = response.data.category;
           setCategories((prevArray) => [
             ...prevArray,
-            { id: newCategory.id, label: newCategory.label },
+            { id: newCategory._id, label: newCategory.label },
           ]);
         })
         .catch((error) => {
@@ -169,11 +172,12 @@ function TodoList() {
     // Load categories -- end
   }, []);
 
-  // useEffect(() => {
-  //   console.clear();
-  //   console.log('show : ', show);
-  // }, [show]);
-
+  useEffect(() => {
+    console.clear();
+    console.log('show : ', show);
+    console.log('categories : ', categories);
+    console.log('taskList : ', taskList);
+  }, [show, categories, taskList]);
   return (
     <>
       <Layout
@@ -215,6 +219,7 @@ function TodoList() {
         status={show.data.status}
         createdAt={show.data.createdAt}
         completedAt={show.data.completedAt}
+        categoryId={show.data.categoryId}
         categories={categories}
         setShow={setShow}
         handleClose={handleClose}

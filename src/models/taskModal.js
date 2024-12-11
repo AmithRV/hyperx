@@ -15,6 +15,9 @@ const taskSchema = new Schema({
   completedAt: {
     type: Date,
   },
+  categoryId: {
+    type: String,
+  },
 });
 
 const Task = mongoose.models.tasks || mongoose.model('tasks', taskSchema);
