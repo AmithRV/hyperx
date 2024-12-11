@@ -97,8 +97,13 @@ function TodoList() {
     axios.delete(url);
   };
 
-  const handleCategoryChange = (categoryId) => {
+  const handleCategoryChange = (categoryId, taskId, status) => {
     console.log('categoryId : ', categoryId);
+    axios.patch('/api/todo-list', {
+      taskId,
+      status,
+      categoryId,
+    });
   };
 
   const handleAddCategory = () => {
@@ -111,11 +116,10 @@ function TodoList() {
         })
         .then((response) => {
           setCategoryName('');
-          console.log('response : ', response.data.category);
           const newCategory = response.data.category;
           setCategories((prevArray) => [
             ...prevArray,
-            { id: newCategory.id, label: newCategory.label },
+            { id: newCategory._id, label: newCategory.label },
           ]);
         })
         .catch((error) => {
@@ -169,11 +173,9 @@ function TodoList() {
     // Load categories -- end
   }, []);
 
-  // useEffect(() => {
-  //   console.clear();
-  //   console.log('show : ', show);
-  // }, [show]);
-
+  useEffect(() => {
+    console.log('show : ', show);
+  }, [show]);
   return (
     <>
       <Layout

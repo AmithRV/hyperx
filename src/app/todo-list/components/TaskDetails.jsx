@@ -45,7 +45,7 @@ function TaskDetails({
                   aria-label="Default select example"
                   className="mx-0 py-0 bg-black text-white category-select"
                   onChange={(e) => {
-                    handleCategoryChange(e.target.value);
+                    handleCategoryChange(e.target.value, id, status);
                   }}
                 >
                   {categories.map((category) => (
