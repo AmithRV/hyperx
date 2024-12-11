@@ -45,6 +45,7 @@ export async function GET() {
       status: task.status,
       createdAt: task.createdAt,
       completedAt: task.completedAt,
+      categoryId: task.categoryId,
     }));
 
     return NextResponse.json({
@@ -71,6 +72,7 @@ export async function PATCH(request) {
 
     // Update status
     task.status = status;
+    task.categoryId = categoryId;
 
     if (status === 'active') {
       task.completedAt = '';
@@ -86,6 +88,7 @@ export async function PATCH(request) {
         id: task._id,
         title: task.title,
         status: task.status,
+        categoryId: task.categoryId,
       },
     });
   } catch (error) {

@@ -16,12 +16,15 @@ function TaskDetails({
   status = '',
   createdAt = '',
   completedAt = '',
+  categoryId = '',
   categories = [],
   setShow,
   handleClose,
   handleDeleteTask,
   handleCategoryChange,
 }) {
+  console.log('categoryId :=> ', categoryId);
+
   return (
     <Offcanvas
       show={isVisible}
@@ -47,6 +50,7 @@ function TaskDetails({
                   onChange={(e) => {
                     handleCategoryChange(e.target.value, id, status);
                   }}
+                  value={categoryId}
                 >
                   {categories.map((category) => (
                     <option value={category.id} key={category.id}>

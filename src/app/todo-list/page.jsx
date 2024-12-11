@@ -98,7 +98,6 @@ function TodoList() {
   };
 
   const handleCategoryChange = (categoryId, taskId, status) => {
-    console.log('categoryId : ', categoryId);
     axios.patch('/api/todo-list', {
       taskId,
       status,
@@ -174,8 +173,11 @@ function TodoList() {
   }, []);
 
   useEffect(() => {
+    console.clear();
     console.log('show : ', show);
-  }, [show]);
+    console.log('categories : ', categories);
+    console.log('taskList : ', taskList);
+  }, [show, categories, taskList]);
   return (
     <>
       <Layout
@@ -217,6 +219,7 @@ function TodoList() {
         status={show.data.status}
         createdAt={show.data.createdAt}
         completedAt={show.data.completedAt}
+        categoryId={show.data.categoryId}
         categories={categories}
         setShow={setShow}
         handleClose={handleClose}
