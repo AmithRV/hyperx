@@ -12,14 +12,16 @@ import Loading from './components/Loading';
 import Layout from './components/Layout';
 
 import '@/styles/todo-list/todo-list-body.css';
+import AddCategory from './components/AddCategory';
 
 function TodoList() {
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [categoryName, setCategoryName] = useState('');
   const [completedTasks, setCompletedTasks] = useState([]);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
-
   const [show, setShow] = useState({ isVisible: false, type: '', data: {} });
 
   const handleClose = () => {
@@ -95,7 +97,52 @@ function TodoList() {
     axios.delete(url);
   };
 
+  const handleCategoryChange = (categoryId) => {
+    console.log('categoryId : ', categoryId);
+  };
+
+  const handleAddCategory = () => {
+    if (categoryName.trim() !== '') {
+      setLoading(true);
+
+      axios
+        .post('/api/todo-list/categories', {
+          label: categoryName,
+        })
+        .then((response) => {
+          setCategoryName('');
+          console.log('response : ', response.data.category);
+          const newCategory = response.data.category;
+          setCategories((prevArray) => [
+            ...prevArray,
+            { id: newCategory.id, label: newCategory.label },
+          ]);
+        })
+        .catch((error) => {
+          if (error.response.status === 400) {
+            toast.error(error.response.data.error);
+          } else {
+            toast.error('something went wrong');
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+          setShow((prevState) => ({
+            isVisible: true,
+            type: 'task-details',
+            data: {
+              id: prevState.data.categoryDetails.id,
+              label: prevState.data.categoryDetails.title,
+              status: prevState.data.categoryDetails.status,
+              createdAt: prevState.data.categoryDetails.createdAt,
+            },
+          }));
+        });
+    }
+  };
+
   useEffect(() => {
+    // Load todo-list -- start
     setLoading(true);
     axios
       .get('/api/todo-list')
@@ -112,7 +159,20 @@ function TodoList() {
       .finally(() => {
         setLoading(false);
       });
+    // Load todo-list -- end
+
+    // Load categories -- start
+    axios.get('/api/todo-list/categories').then((response) => {
+      console.log('response : ', response.data.categories);
+      setCategories(response.data.categories);
+    });
+    // Load categories -- end
   }, []);
+
+  // useEffect(() => {
+  //   console.clear();
+  //   console.log('show : ', show);
+  // }, [show]);
 
   return (
     <>
@@ -150,12 +210,25 @@ function TodoList() {
 
       <TaskDetails
         isVisible={show.isVisible && show.type === 'task-details'}
+        id={show.data.id}
         title={show.data.label}
         status={show.data.status}
         createdAt={show.data.createdAt}
         completedAt={show.data.completedAt}
+        categories={categories}
+        setShow={setShow}
         handleClose={handleClose}
         handleDeleteTask={handleDeleteTask}
+        handleCategoryChange={handleCategoryChange}
+      />
+
+      <AddCategory
+        show={show.isVisible && show.type === 'add-category'}
+        categoryName={categoryName}
+        loading={loading}
+        setCategoryName={setCategoryName}
+        handleClose={handleClose}
+        handleAddCategory={handleAddCategory}
       />
     </>
   );

@@ -1,19 +1,26 @@
-import Offcanvas from 'react-bootstrap/Offcanvas';
+'use client';
 import InputGroup from 'react-bootstrap/InputGroup';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 import Form from 'react-bootstrap/Form';
-import React from 'react';
 import Image from 'next/image';
+import React, { useState } from 'react';
+
+import '@/styles/todo-list/task-details.css';
 
 function TaskDetails({
   isVisible = false,
+  id = '',
   title = '',
   status = '',
   createdAt = '',
   completedAt = '',
+  categories = [],
+  setShow,
   handleClose,
   handleDeleteTask,
+  handleCategoryChange,
 }) {
   return (
     <Offcanvas
@@ -23,16 +30,57 @@ function TaskDetails({
       placement="end"
     >
       <Offcanvas.Header closeButton>
-        <Offcanvas.Title>{title}</Offcanvas.Title>
+        <Offcanvas.Title>Task Details</Offcanvas.Title>
       </Offcanvas.Header>
       <Offcanvas.Body className="pt-0">
         <div className="d-flex; flex-direction: column;">
           <div className="my-2">
-            <Badge pill bg={status === 'active' ? 'danger' : 'success'}>
-              {status}
-            </Badge>
+            <div className="d-flex justify-content-between align-items-center">
+              <Badge pill bg={status === 'active' ? 'danger' : 'success'}>
+                {status}
+              </Badge>
+
+              <div className="category-wrap d-flex justify-content-between align-items-center w-100 bg-black mx-2">
+                <Form.Select
+                  aria-label="Default select example"
+                  className="mx-0 py-0 bg-black text-white category-select"
+                  onChange={(e) => {
+                    handleCategoryChange(e.target.value);
+                  }}
+                >
+                  {categories.map((category) => (
+                    <option value={category.id} key={category.id}>
+                      {category.label}
+                    </option>
+                  ))}
+                </Form.Select>
+                <Image
+                  src="/svg/circle-plus.svg"
+                  width={20}
+                  height={20}
+                  alt=""
+                  className="mx-2 add-category"
+                  onClick={() => {
+                    setShow({
+                      isVisible: true,
+                      type: 'add-category',
+                      data: {
+                        categoryDetails: {
+                          id,
+                          title,
+                          status,
+                          createdAt,
+                          completedAt,
+                        },
+                      },
+                    });
+                  }}
+                />
+              </div>
+            </div>
 
             <div className="d-flex; flex-direction: column; my-4">
+              <p>{title}</p>
               <InputGroup className="mb-3">
                 <InputGroup.Text
                   id="basic-addon1"
