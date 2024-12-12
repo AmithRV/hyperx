@@ -71,7 +71,7 @@ function Login() {
       <div className="auth_section_1">
         <form className="form_section" onSubmit={handleSubmit}>
           <div className="form-group mx-4 my-4">
-            <label htmlFor="exampleInputEmail1">UserId</label>
+            <label htmlFor="exampleInputEmail1">UserId x</label>
             <input
               type="text"
               className="form-control mt-2 fw-bold"
