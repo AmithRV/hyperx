@@ -52,8 +52,8 @@ function Login() {
 
   const formik = useFormik({
     initialValues: {
-      userId: 'amith@8589',
-      password: 'Amith@123',
+      userId: '',
+      password: '',
     },
     validate,
     onSubmit: () => {
@@ -71,7 +71,7 @@ function Login() {
       <div className="auth_section_1">
         <form className="form_section" onSubmit={handleSubmit}>
           <div className="form-group mx-4 my-4">
-            <label htmlFor="exampleInputEmail1">UserId x</label>
+            <label htmlFor="exampleInputEmail1">UserId</label>
             <input
               type="text"
               className="form-control mt-2 fw-bold"
