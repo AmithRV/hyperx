@@ -18,8 +18,6 @@ export async function POST(request) {
       categoryId: process.env.GENERAL_TASKS_ID,
     });
 
-    console.log('pop : ', process.env.GENERAL_TASKS_ID);
-    console.log('newTask : ', newTask);
     //
     const savedTask = await newTask.save();
 

@@ -17,6 +17,6 @@ export function CreateTask(data) {
   return handlePostMethod('/api/todo-list', data);
 }
 
-export function GetTasks() {
+export function ListTasks() {
   return handleGetMethod('/api/todo-list');
 }

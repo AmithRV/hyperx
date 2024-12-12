@@ -19,7 +19,7 @@ import {
 import {
   CreateTask,
   DeleteTask,
-  GetTasks,
+  ListTasks,
   UpdateTask,
 } from '@/lib/api-collection/todo-list';
 
@@ -154,9 +154,9 @@ function TodoList() {
   useEffect(() => {
     // Load todo-list -- start
     setLoading(true);
-    GetTasks()
+    ListTasks()
       .then((response) => {
-        const tasks = response.data.tasks;
+        const tasks = response.tasks;
         const task_list = tasks.filter((e) => e.status === 'active');
         const completed_tasks_list = tasks.filter(
           (e) => e.status === 'completed'
@@ -170,12 +170,9 @@ function TodoList() {
       });
     // Load todo-list -- end
 
-    console.log('env : ', process.env.DOMAIN);
-
     // Load categories -- start
     ListCategories().then((response) => {
-      console.log('response : ', response.data.categories);
-      setCategories(response.data.categories);
+      setCategories(response.categories);
     });
     // Load categories -- end
   }, []);

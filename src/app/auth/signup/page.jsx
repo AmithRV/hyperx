@@ -57,7 +57,7 @@ function Signup() {
 
   const formik = useFormik({
     initialValues: {
-      userId: 'amith@8589',
+      userId: '',
       password: '',
       email: '',
     },

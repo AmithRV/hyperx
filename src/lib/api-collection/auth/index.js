@@ -5,7 +5,7 @@ export function UserLogin(data) {
 }
 
 export function UserSignup(data) {
-  return handlePostMethod('/api/auth/signupn', data);
+  return handlePostMethod('/api/auth/signup', data);
 }
 
 export function UserLogout() {

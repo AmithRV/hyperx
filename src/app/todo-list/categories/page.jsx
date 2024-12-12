@@ -14,8 +14,7 @@ function Categories() {
 
   useEffect(() => {
     ListCategoriesWithTasks().then((response) => {
-      console.log('response : ', response.data.categories);
-      setCategories(response.data.categories);
+      setCategories(response.categories);
     });
   }, []);
 
