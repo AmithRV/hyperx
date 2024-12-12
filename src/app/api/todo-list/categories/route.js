@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import Category from '@/models/categoryModal';
+
 import connect from '@/dbConfig/dbConfig';
 
 connect();
@@ -10,6 +11,19 @@ export async function GET() {
     //Get categories from the db
     const categories = await Category.find({});
 
+    const result = await Category.aggregate([
+      {
+        $lookup: {
+          from: 'tasks',
+          localField: '_id',
+          foreignField: 'categoryId',
+          as: 'associated_tasks',
+        },
+      },
+    ]);
+
+    console.log('result : ', result);
+
     //Format the data
     const categoriesList = categories.map((category) => ({
       id: category._id,
@@ -18,7 +32,7 @@ export async function GET() {
 
     return NextResponse.json({
       success: true,
-      categories: categoriesList,
+      categories: result,
     });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
