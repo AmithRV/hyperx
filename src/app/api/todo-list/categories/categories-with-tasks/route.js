@@ -19,8 +19,6 @@ export async function GET() {
       },
     ]);
 
-    console.log('result : ', result);
-
     return NextResponse.json({
       success: true,
       categories: result,
