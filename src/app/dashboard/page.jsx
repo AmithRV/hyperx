@@ -2,9 +2,10 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-import '@/styles/dashboard/dashboard.css';
-import ItemCard from './components/ItemCard';
 import { UserLogout } from '@/lib/api-collection/auth';
+import ItemCard from './components/ItemCard';
+
+import '@/styles/dashboard/dashboard.css';
 
 function Dashboard() {
   const items = [

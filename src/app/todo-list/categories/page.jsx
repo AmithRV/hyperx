@@ -4,10 +4,10 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
+import { ListCategoriesWithTasks } from '@/lib/api-collection/todo-list/categories/categories-with-tasks';
 import Layout from '../components/Layout';
 
 import '@/styles/todo-list/categories.css';
-import { ListCategoriesWithTasks } from '@/lib/api-collection/todo-list/categories/categories-with-tasks';
 
 function Categories() {
   const [categories, setCategories] = useState([]);

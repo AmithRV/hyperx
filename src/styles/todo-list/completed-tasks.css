@@ -10,10 +10,10 @@
     color: white !important;
 }
 
-.accordion-header {
+/* .accordion-header {
     border-bottom: 1px solid white;
     height: 53px;
-}
+} */
 
 .accordion-button:focus {
     box-shadow: none;

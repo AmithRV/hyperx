@@ -6,22 +6,22 @@ import { v4 as uuidv4 } from 'uuid';
 import CompletedTask from './components/CompletedTask';
 import TaskDetails from './components/TaskDetails';
 import ActiveTasks from './components/ActiveTasks';
-import AddTask from './components/AddTask';
-import Loading from './components/Loading';
-import Layout from './components/Layout';
-
-import '@/styles/todo-list/todo-list-body.css';
 import AddCategory from './components/AddCategory';
 import {
   CreateCategory,
   ListCategories,
 } from '@/lib/api-collection/todo-list/categories';
+import AddTask from './components/AddTask';
+import Loading from './components/Loading';
+import Layout from './components/Layout';
 import {
   CreateTask,
   DeleteTask,
   ListTasks,
   UpdateTask,
 } from '@/lib/api-collection/todo-list';
+
+import '@/styles/todo-list/todo-list-body.css';
 
 function TodoList() {
   const [task, setTask] = useState('');
