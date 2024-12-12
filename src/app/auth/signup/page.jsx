@@ -5,6 +5,8 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 
 import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
+import { UserSignup } from '@/lib/api-collection/auth';
+
 import '@/styles/auth/style.css';
 
 function Signup() {
@@ -36,7 +38,7 @@ function Signup() {
       email: formik.values.email,
     };
 
-    Signup(data)
+    UserSignup(data)
       .then(() => {
         formik.resetForm();
         router.push(`/auth/login`);

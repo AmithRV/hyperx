@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import '@/styles/dashboard/dashboard.css';
 import ItemCard from './components/ItemCard';
-import { Logout } from '@/lib/api-collection/todo-list/auth';
+import { UserLogout } from '@/lib/api-collection/auth';
 
 function Dashboard() {
   const items = [
@@ -27,7 +27,7 @@ function Dashboard() {
 
   const handleLogout = () => {
     setLoading(true);
-    Logout()
+    UserLogout()
       .then(() => {
         router.push('/auth/login');
       })

@@ -5,6 +5,8 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 
 import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
+import { UserLogin } from '@/lib/api-collection/auth';
+
 import '@/styles/auth/style.css';
 
 function Login() {
@@ -31,7 +33,7 @@ function Login() {
       userid: formik.values.userId,
       password: formik.values.password,
     };
-    Login(data)
+    UserLogin(data)
       .then(() => {
         formik.resetForm();
         router.push(`/dashboard`);
