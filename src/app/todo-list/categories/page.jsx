@@ -3,22 +3,20 @@ import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import axios from 'axios';
 
 import Layout from '../components/Layout';
 
 import '@/styles/todo-list/categories.css';
+import { ListCategoriesWithTasks } from '@/lib/api-collection/todo-list/categories/categories-with-tasks';
 
 function Categories() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios
-      .get('/api/todo-list/categories/categories-with-tasks')
-      .then((response) => {
-        console.log('response : ', response.data.categories);
-        setCategories(response.data.categories);
-      });
+    ListCategoriesWithTasks().then((response) => {
+      console.log('response : ', response.data.categories);
+      setCategories(response.data.categories);
+    });
   }, []);
 
   return (

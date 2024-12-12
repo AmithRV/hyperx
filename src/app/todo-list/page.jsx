@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
 
 import CompletedTask from './components/CompletedTask';
 import TaskDetails from './components/TaskDetails';
@@ -13,6 +12,16 @@ import Layout from './components/Layout';
 
 import '@/styles/todo-list/todo-list-body.css';
 import AddCategory from './components/AddCategory';
+import {
+  CreateCategory,
+  ListCategories,
+} from '@/lib/api-collection/todo-list/categories';
+import {
+  CreateTask,
+  DeleteTask,
+  GetTasks,
+  UpdateTask,
+} from '@/lib/api-collection/todo-list';
 
 function TodoList() {
   const [task, setTask] = useState('');
@@ -38,11 +47,7 @@ function TodoList() {
       setTaskList((prevArray) => [...prevArray, data]);
       setTask('');
 
-      axios
-        .post('/api/todo-list', {
-          label: task,
-          status: 'active',
-        })
+      CreateTask(data)
         .then(() => {})
         .catch((error) => {
           if (error.response.status === 400) {
@@ -63,7 +68,8 @@ function TodoList() {
       setTaskList(filteredTasks);
       setCompletedTasks((prevArray) => [...prevArray, taskDetails]);
 
-      axios.patch('/api/todo-list', { taskId, status: 'completed' });
+      const data = { taskId, status: 'completed' };
+      UpdateTask(data);
     }
 
     if (taskStatus === 'completed') {
@@ -75,7 +81,8 @@ function TodoList() {
       setCompletedTasks(filteredTasks);
       setTaskList((prevArray) => [...prevArray, taskDetails]);
 
-      axios.patch('/api/todo-list', { taskId, status: 'active' });
+      const data = { taskId, status: 'active' };
+      UpdateTask(data);
     }
   };
 
@@ -93,26 +100,26 @@ function TodoList() {
 
     handleClose();
 
-    const url = `/api/todo-list?taskId=${taskId}`;
-    axios.delete(url);
+    DeleteTask(taskId);
   };
 
   const handleCategoryChange = (categoryId, taskId, status) => {
-    axios.patch('/api/todo-list', {
+    const data = {
       taskId,
       status,
       categoryId,
-    });
+    };
+    UpdateTask(data);
   };
 
   const handleAddCategory = () => {
     if (categoryName.trim() !== '') {
       setLoading(true);
+      const data = {
+        label: categoryName,
+      };
 
-      axios
-        .post('/api/todo-list/categories', {
-          label: categoryName,
-        })
+      CreateCategory(data)
         .then((response) => {
           setCategoryName('');
           const newCategory = response.data.category;
@@ -147,8 +154,7 @@ function TodoList() {
   useEffect(() => {
     // Load todo-list -- start
     setLoading(true);
-    axios
-      .get('/api/todo-list')
+    GetTasks()
       .then((response) => {
         const tasks = response.data.tasks;
         const task_list = tasks.filter((e) => e.status === 'active');
@@ -164,20 +170,16 @@ function TodoList() {
       });
     // Load todo-list -- end
 
+    console.log('env : ', process.env.DOMAIN);
+
     // Load categories -- start
-    axios.get('/api/todo-list/categories').then((response) => {
+    ListCategories().then((response) => {
       console.log('response : ', response.data.categories);
       setCategories(response.data.categories);
     });
     // Load categories -- end
   }, []);
 
-  useEffect(() => {
-    console.clear();
-    console.log('show : ', show);
-    console.log('categories : ', categories);
-    console.log('taskList : ', taskList);
-  }, [show, categories, taskList]);
   return (
     <>
       <Layout
