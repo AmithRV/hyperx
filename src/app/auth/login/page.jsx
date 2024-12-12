@@ -3,7 +3,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import axios from 'axios';
 
 import ErrorMessage from '@/app/components/ui/form/ErrorMessage';
 import '@/styles/auth/style.css';
@@ -27,11 +26,12 @@ function Login() {
 
   const handleFormSubmit = () => {
     setLoading({ type: 'login', state: true });
-    axios
-      .post('/api/auth/login', {
-        userid: formik.values.userId,
-        password: formik.values.password,
-      })
+
+    const data = {
+      userid: formik.values.userId,
+      password: formik.values.password,
+    };
+    Login(data)
       .then(() => {
         formik.resetForm();
         router.push(`/dashboard`);

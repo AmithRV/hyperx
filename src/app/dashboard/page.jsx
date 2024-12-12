@@ -1,10 +1,10 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import '@/styles/dashboard/dashboard.css';
 import ItemCard from './components/ItemCard';
+import { Logout } from '@/lib/api-collection/todo-list/auth';
 
 function Dashboard() {
   const items = [
@@ -27,8 +27,7 @@ function Dashboard() {
 
   const handleLogout = () => {
     setLoading(true);
-    axios
-      .get('/api/auth/logout')
+    Logout()
       .then(() => {
         router.push('/auth/login');
       })
