@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 
 import Category from '@/models/categoryModal';
-
 import connect from '@/dbConfig/dbConfig';
+import Task from '@/models/taskModal';
 
 connect();
 
@@ -50,8 +50,6 @@ export async function DELETE(request) {
     // Extract categoryId from the URL search params
     const { searchParams } = new URL(request.url);
     const categoryId = searchParams.get('categoryId');
-    console.log('categoryId : ', categoryId);
-    console.log('process : ', process.env.GENERAL_CATEGORY_ID);
 
     if (categoryId === process.env.GENERAL_CATEGORY_ID) {
       return NextResponse.json(
@@ -77,8 +75,15 @@ export async function DELETE(request) {
       );
     }
 
+    // Update the categoryId for all tasks associated to Deleted category
+    const updatedTasks = await Task.updateMany(
+      { categoryId: categoryId },
+      { $set: { categoryId: process.env.GENERAL_CATEGORY_ID } }
+    );
+
     // Delete the category from the database
     const deletedCategory = await Category.deleteOne({ _id: categoryId });
+
     return NextResponse.json(
       {
         message: 'Category deleted successfully',
