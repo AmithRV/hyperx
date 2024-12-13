@@ -9,23 +9,27 @@ import { DeleteCategory } from '@/lib/api-collection/todo-list/categories';
 import Layout from '../components/Layout';
 
 import '@/styles/todo-list/categories.css';
+import DeleteCategoryConfirmModal from '../components/DeleteCategoryConfirmModal';
 
 function Categories() {
   const [categories, setCategories] = useState([]);
-
   const [totalPendingTasks, setTotalPendingTasks] = useState(0);
+  const [show, setShow] = useState({ type: '', isVisible: false, data: {} });
   const [totalCompletedTasks, setTotalCompletedTasks] = useState(0);
 
-  const handleDeleteCategory = (categoryId) => {
-    DeleteCategory(categoryId).then((response) =>
-      console.log('response : ', response)
-    );
+  const handleDeleteCategory = () => {
+    const categoryId = show.data.category.id;
+
+    DeleteCategory(categoryId)
+      .then((response) => console.log('response : ', response))
+      .finally(() => {
+        setShow({ type: '', isVisible: false, data: {} });
+      });
   };
 
   useEffect(() => {
     ListCategoriesWithTasks().then((response) => {
       setCategories(response.categories);
-      console.log('categories : ', response.categories);
 
       const categories = response.categories;
       categories.map((category) => {
@@ -41,54 +45,79 @@ function Categories() {
     });
   }, []);
 
+  useEffect(() => {
+    console.log('show : ', show);
+  }, [show]);
   return (
-    <Layout
-      navigationVisible={false}
-      activeTaskCount={totalPendingTasks}
-      completedTaskCount={totalCompletedTasks}
-    >
-      <div className="categories-wrap">
-        <Accordion>
-          {categories.map((e) => (
-            <Accordion.Item key={e.id} eventKey={e.id}>
-              <Accordion.Header>
-                <div className="w-100 d-flex align-items-center justify-content-between">
-                  <div>
-                    <Image
-                      src="/svg/folder.svg"
-                      alt=""
-                      width={25}
-                      height={25}
-                      className="opacity-50"
-                    />
-                    <span className="mx-2 opacity-75">{e.label}</span>
+    <>
+      <Layout
+        navigationVisible={false}
+        activeTaskCount={totalPendingTasks}
+        completedTaskCount={totalCompletedTasks}
+      >
+        <div className="categories-wrap">
+          <Accordion>
+            {categories.map((category) => (
+              <Accordion.Item key={category.id} eventKey={category.id}>
+                <Accordion.Header>
+                  <div className="w-100 d-flex align-items-center justify-content-between">
+                    <div>
+                      <Image
+                        src="/svg/folder.svg"
+                        alt=""
+                        width={25}
+                        height={25}
+                        className="opacity-50"
+                      />
+                      <span className="mx-2 opacity-75">{category.label}</span>
+                    </div>
+                    <div>
+                      {console.log(
+                        'GENERAL_TASKS_ID : ',
+                        process.env.NEXT_PUBLIC_GENERAL_TASKS_ID
+                      )}
+                      {category.id !==
+                        process.env.NEXT_PUBLIC_GENERAL_TASKS_ID && (
+                        <Image
+                          src="/svg/trash.svg"
+                          alt=""
+                          width={25}
+                          height={25}
+                          className="opacity-50"
+                          onClick={() => {
+                            setShow({
+                              type: 'delete-category',
+                              isVisible: true,
+                              data: { category },
+                            });
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <Image
-                      src="/svg/trash.svg"
-                      alt=""
-                      width={25}
-                      height={25}
-                      className="opacity-50"
-                      onClick={() => {
-                        handleDeleteCategory(e.id);
-                      }}
-                    />
-                  </div>
-                </div>
-              </Accordion.Header>
-              <Accordion.Body>
-                <ListGroup key={e.id}>
-                  {e.associated_tasks.map((task, index) => (
-                    <ListGroup.Item key={index}>{task.label}</ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-      </div>
-    </Layout>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <ListGroup key={category.id}>
+                    {category.associated_tasks.map((task, index) => (
+                      <ListGroup.Item key={index}>{task.label}</ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                </Accordion.Body>
+              </Accordion.Item>
+            ))}
+          </Accordion>
+        </div>
+      </Layout>
+
+      <DeleteCategoryConfirmModal
+        isVisible={show.type === 'delete-category' && show.isVisible}
+        label={show?.data?.category?.label}
+        handleClose={() => {
+          setShow({ type: '', isVisible: false });
+        }}
+        handleDeleteCategory={handleDeleteCategory}
+      />
+    </>
   );
 }
 
