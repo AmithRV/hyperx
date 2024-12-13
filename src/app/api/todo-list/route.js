@@ -70,7 +70,7 @@ export async function PATCH(request) {
 
     // Update status
     task.status = status;
-    task.categoryId = categoryId;
+    task.categoryId = categoryId || task.categoryId;
 
     if (status === 'active') {
       task.completedAt = '';
