@@ -5,13 +5,15 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { ListCategoriesWithTasks } from '@/lib/api-collection/todo-list/categories/categories-with-tasks';
+import DeleteCategoryConfirmModal from '../components/DeleteCategoryConfirmModal';
 import { DeleteCategory } from '@/lib/api-collection/todo-list/categories';
+import Loading from '../components/Loading';
 import Layout from '../components/Layout';
 
 import '@/styles/todo-list/categories.css';
-import DeleteCategoryConfirmModal from '../components/DeleteCategoryConfirmModal';
 
 function Categories() {
+  const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [totalPendingTasks, setTotalPendingTasks] = useState(0);
   const [show, setShow] = useState({ type: '', isVisible: false, data: {} });
@@ -34,21 +36,26 @@ function Categories() {
   };
 
   useEffect(() => {
-    ListCategoriesWithTasks().then((response) => {
-      setCategories(response.categories);
+    setLoading(true);
+    ListCategoriesWithTasks()
+      .then((response) => {
+        setCategories(response.categories);
 
-      const categories = response.categories;
-      categories.map((category) => {
-        const associatedTasks = category.associated_tasks;
-        associatedTasks.map((task) => {
-          if (task.status === 'active') {
-            setTotalPendingTasks((prev) => prev + 1);
-          } else {
-            setTotalCompletedTasks((prev) => prev + 1);
-          }
+        const categories = response.categories;
+        categories.map((category) => {
+          const associatedTasks = category.associated_tasks;
+          associatedTasks.map((task) => {
+            if (task.status === 'active') {
+              setTotalPendingTasks((prev) => prev + 1);
+            } else {
+              setTotalCompletedTasks((prev) => prev + 1);
+            }
+          });
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    });
   }, []);
 
   return (
@@ -58,6 +65,7 @@ function Categories() {
         activeTaskCount={totalPendingTasks}
         completedTaskCount={totalCompletedTasks}
       >
+        {loading && <Loading />}
         <div className="categories-wrap">
           <Accordion>
             {categories.map((category) => (
