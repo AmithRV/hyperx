@@ -45,10 +45,37 @@ export async function POST(request) {
   }
 }
 
-export async function PATCH(request) {
+export async function DELETE(request) {
   try {
-    //
+    // Extract categoryId from the URL search params
+    const { searchParams } = new URL(request.url);
+    const categoryId = searchParams.get('categoryId');
+
+    if (!categoryId) {
+      return NextResponse.json(
+        { error: 'categoryId is required' },
+        { status: 400 }
+      );
+    }
+
+    // Check if category exists
+    const category = await Category.findOne({ _id: categoryId });
+
+    if (!category) {
+      return NextResponse.json(
+        { error: 'Category not found' },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        message: 'Category deleted successfully',
+        task: category,
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    //
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

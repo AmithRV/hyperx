@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { ListCategoriesWithTasks } from '@/lib/api-collection/todo-list/categories/categories-with-tasks';
+import { DeleteCategory } from '@/lib/api-collection/todo-list/categories';
 import Layout from '../components/Layout';
 
 import '@/styles/todo-list/categories.css';
@@ -15,12 +16,18 @@ function Categories() {
   const [totalPendingTasks, setTotalPendingTasks] = useState(0);
   const [totalCompletedTasks, setTotalCompletedTasks] = useState(0);
 
+  const handleDeleteCategory = (categoryId) => {
+    console.log('categoryId : ', categoryId);
+    DeleteCategory(categoryId).then((response) =>
+      console.log('response : ', response)
+    );
+  };
+
   useEffect(() => {
     ListCategoriesWithTasks().then((response) => {
       setCategories(response.categories);
 
       const categories = response.categories;
-
       categories.map((category) => {
         const associatedTasks = category.associated_tasks;
         associatedTasks.map((task) => {
@@ -45,9 +52,29 @@ function Categories() {
           {categories.map((e, index) => (
             <Accordion.Item key={e.id} eventKey={index}>
               <Accordion.Header>
-                <div className="w-100 d-flex align-items-center">
-                  <Image src="/svg/folder.svg" alt="" width={25} height={25} />
-                  <span className="mx-2">{e.label}</span>
+                <div className="w-100 d-flex align-items-center justify-content-between">
+                  <div>
+                    <Image
+                      src="/svg/folder.svg"
+                      alt=""
+                      width={25}
+                      height={25}
+                      className="opacity-50"
+                    />
+                    <span className="mx-2 opacity-75">{e.label}</span>
+                  </div>
+                  <div>
+                    <Image
+                      src="/svg/trash.svg"
+                      alt=""
+                      width={25}
+                      height={25}
+                      className="opacity-50"
+                      onClick={() => {
+                        handleDeleteCategory(e.id);
+                      }}
+                    />
+                  </div>
                 </div>
               </Accordion.Header>
               <Accordion.Body>

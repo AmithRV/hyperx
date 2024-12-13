@@ -19,9 +19,15 @@ export async function GET() {
       },
     ]);
 
+    //Format the data
+    const categoriesList = result.map((category) => ({
+      id: category._id,
+      ...category,
+    }));
+
     return NextResponse.json({
       success: true,
-      categories: result,
+      categories: categoriesList,
     });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
