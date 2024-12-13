@@ -17,7 +17,6 @@ function Categories() {
   const [totalCompletedTasks, setTotalCompletedTasks] = useState(0);
 
   const handleDeleteCategory = (categoryId) => {
-    console.log('categoryId : ', categoryId);
     DeleteCategory(categoryId).then((response) =>
       console.log('response : ', response)
     );
@@ -26,6 +25,7 @@ function Categories() {
   useEffect(() => {
     ListCategoriesWithTasks().then((response) => {
       setCategories(response.categories);
+      console.log('categories : ', response.categories);
 
       const categories = response.categories;
       categories.map((category) => {
@@ -49,8 +49,8 @@ function Categories() {
     >
       <div className="categories-wrap">
         <Accordion>
-          {categories.map((e, index) => (
-            <Accordion.Item key={e.id} eventKey={index}>
+          {categories.map((e) => (
+            <Accordion.Item key={e.id} eventKey={e.id}>
               <Accordion.Header>
                 <div className="w-100 d-flex align-items-center justify-content-between">
                   <div>
@@ -79,8 +79,8 @@ function Categories() {
               </Accordion.Header>
               <Accordion.Body>
                 <ListGroup key={e.id}>
-                  {e.associated_tasks.map((task) => (
-                    <ListGroup.Item key={task.id}>{task.label}</ListGroup.Item>
+                  {e.associated_tasks.map((task, index) => (
+                    <ListGroup.Item key={index}>{task.label}</ListGroup.Item>
                   ))}
                 </ListGroup>
               </Accordion.Body>
