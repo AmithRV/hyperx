@@ -51,9 +51,6 @@ function Categories() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log('show : ', show);
-  }, [show]);
   return (
     <>
       <Layout
