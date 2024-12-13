@@ -50,6 +50,15 @@ export async function DELETE(request) {
     // Extract categoryId from the URL search params
     const { searchParams } = new URL(request.url);
     const categoryId = searchParams.get('categoryId');
+    console.log('categoryId : ', categoryId);
+    console.log('process : ', process.env.GENERAL_CATEGORY_ID);
+
+    if (categoryId === process.env.GENERAL_CATEGORY_ID) {
+      return NextResponse.json(
+        { error: "General category can't be deleted," },
+        { status: 400 }
+      );
+    }
 
     if (!categoryId) {
       return NextResponse.json(

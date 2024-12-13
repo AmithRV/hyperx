@@ -15,7 +15,7 @@ export async function POST(request) {
       label,
       status,
       createdAt: new Date(),
-      categoryId: process.env.GENERAL_TASKS_ID,
+      categoryId: process.env.GENERAL_CATEGORY_ID,
     });
 
     //

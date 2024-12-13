@@ -78,12 +78,8 @@ function Categories() {
                       <span className="mx-2 opacity-75">{category.label}</span>
                     </div>
                     <div>
-                      {console.log(
-                        'GENERAL_TASKS_ID : ',
-                        process.env.NEXT_PUBLIC_GENERAL_TASKS_ID
-                      )}
                       {category.id !==
-                        process.env.NEXT_PUBLIC_GENERAL_TASKS_ID && (
+                        process.env.NEXT_PUBLIC_GENERAL_CATEGORY_ID && (
                         <Image
                           src="/svg/trash.svg"
                           alt=""
