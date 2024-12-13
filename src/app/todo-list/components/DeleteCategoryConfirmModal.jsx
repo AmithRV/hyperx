@@ -8,7 +8,7 @@ function DeleteCategoryConfirmModal({
   handleDeleteCategory,
 }) {
   return (
-    <Modal show={isVisible} onHide={handleClose} className="bg-black">
+    <Modal show={isVisible} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Delete Category</Modal.Title>
       </Modal.Header>

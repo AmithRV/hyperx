@@ -68,10 +68,13 @@ export async function DELETE(request) {
       );
     }
 
+    // Delete the category from the database
+    const deletedCategory = await Category.deleteOne({ _id: categoryId });
+    console.log('deletedCategory : ', deletedCategory);
     return NextResponse.json(
       {
         message: 'Category deleted successfully',
-        task: category,
+        category: { id: category._id, label: category.label },
       },
       { status: 200 }
     );

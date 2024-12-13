@@ -21,7 +21,13 @@ function Categories() {
     const categoryId = show.data.category.id;
 
     DeleteCategory(categoryId)
-      .then((response) => console.log('response : ', response))
+      .then((response) => {
+        setCategories((prevCategories) =>
+          prevCategories.filter(
+            (category) => category.id !== response.category.id
+          )
+        );
+      })
       .finally(() => {
         setShow({ type: '', isVisible: false, data: {} });
       });
