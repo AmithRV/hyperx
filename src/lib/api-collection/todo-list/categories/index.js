@@ -5,5 +5,5 @@ export function ListCategories() {
 }
 
 export function CreateCategory(data) {
-  return handlePostMethod('/api/todo-list', data);
+  return handlePostMethod('/api/todo-list/categories', data);
 }

@@ -122,7 +122,7 @@ function TodoList() {
       CreateCategory(data)
         .then((response) => {
           setCategoryName('');
-          const newCategory = response.data.category;
+          const newCategory = response.category;
           setCategories((prevArray) => [
             ...prevArray,
             { id: newCategory._id, label: newCategory.label },
