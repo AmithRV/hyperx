@@ -1,7 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { v4 as uuidv4 } from 'uuid';
 
+import { getFromLocalStorage, saveToLocalStorage } from '@/utils/localStorage';
 import CompletedTask from './components/CompletedTask';
 import TaskDetails from './components/TaskDetails';
 import ActiveTasks from './components/ActiveTasks';
@@ -23,6 +25,8 @@ import {
 import '@/styles/todo-list/todo-list-body.css';
 
 function TodoList() {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,22 +46,31 @@ function TodoList() {
 
   const handleAddToList = (task) => {
     if (task.trim() !== '') {
-      const data = { label: task, status: 'active' };
+      const data = { id: uuidv4(), label: task, status: 'active' };
 
-      CreateTask(data)
-        .then((response) => {
-          //Update the id with id from api-response
-          const taskId = response.savedTask._id;
-          setTaskList((prevArray) => [...prevArray, { ...data, id: taskId }]);
-          setTask('');
-        })
-        .catch((error) => {
-          if (error.response.status === 400) {
-            toast.error(error.response.data.error);
-          } else {
-            toast.error('something went wrong');
-          }
-        });
+      if (navigator.onLine) {
+        CreateTask(data)
+          .then((response) => {
+            //Update the id with id from api-response
+            const taskId = response.savedTask._id;
+            setTaskList((prevArray) => [...prevArray, { ...data, id: taskId }]);
+            setTask('');
+          })
+          .catch((error) => {
+            if (error.response.status === 400) {
+              toast.error(error.response.data.error);
+            } else {
+              toast.error('something went wrong');
+            }
+          });
+      } else {
+        const tasksInLS = getFromLocalStorage('tasks') || [];
+        tasksInLS.push(data);
+        saveToLocalStorage('tasks', tasksInLS);
+        //
+        setTaskList((prevArray) => [...prevArray, data]);
+        setTask('');
+      }
     }
   };
 
@@ -179,6 +192,37 @@ function TodoList() {
     // Load categories -- end
   }, []);
 
+  useEffect(() => {
+    // Handler for when network goes online
+    const handleOnline = () => {
+      setIsOnline(true);
+    };
+
+    // Handler for when network goes offline
+    const handleOffline = () => {
+      setIsOnline(false);
+    };
+
+    // Add event listeners
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    // Cleanup event listeners
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  useEffect(() => {
+    const offlineTasks = getFromLocalStorage('tasks') || [];
+
+    console.log('offlineTasks  : ', offlineTasks);
+    if (isOnline && offlineTasks.length > 0) {
+      // api-for bulk upload
+      // saveToLocalStorage('tasks',[]);
+    }
+  }, [isOnline]);
   return (
     <>
       <Layout
