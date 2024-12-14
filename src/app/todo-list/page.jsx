@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { v4 as uuidv4 } from 'uuid';
 
 import CompletedTask from './components/CompletedTask';
 import TaskDetails from './components/TaskDetails';
@@ -43,12 +42,15 @@ function TodoList() {
 
   const handleAddToList = (task) => {
     if (task.trim() !== '') {
-      const data = { id: uuidv4(), label: task, status: 'active' };
-      setTaskList((prevArray) => [...prevArray, data]);
-      setTask('');
+      const data = { label: task, status: 'active' };
 
       CreateTask(data)
-        .then(() => {})
+        .then((response) => {
+          //Update the id with id from api-response
+          const taskId = response.savedTask._id;
+          setTaskList((prevArray) => [...prevArray, { ...data, id: taskId }]);
+          setTask('');
+        })
         .catch((error) => {
           if (error.response.status === 400) {
             toast.error(error.response.data.error);
