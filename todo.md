@@ -1,8 +1,3 @@
-## Delete Category
-
-1. Add option to delete 'category'.
-2. When a category is 'deleted' all the tasks in it should be listed under the 'General Tasks'. 2.
-
 ## Tasks
 
 1. Delete the completed tasks automatically after 30-days.
@@ -14,6 +9,6 @@
 
 ## API
 
-1. Secure te apis
+1. Secure the apis
 2. Seed the database with initial data.
 3. Rather than params in the url , update it to send as params

@@ -3,17 +3,15 @@
     overflow: hidden;
     border: 1px solid white;
     border-radius: 5px;
+    height: 52px;
 }
 
 .accordion-button {
     background-color: black !important;
     color: white !important;
+    height: 100%;
 }
 
-/* .accordion-header {
-    border-bottom: 1px solid white;
-    height: 53px;
-} */
 
 .accordion-button:focus {
     box-shadow: none;
@@ -32,8 +30,4 @@
     height: calc(100% - 53px);
     overflow: scroll;
     scrollbar-width: none;
-}
-
-.accordion-item {
-    border: none;
 }

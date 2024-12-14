@@ -21,11 +21,12 @@ function CompletedTask({
         defaultActiveKey="1"
         className={isCompletedTasksOpen ? 'h-100' : ''}
       >
-        <Accordion.Item eventKey="0" className="h-100 bg-dark">
+        <Accordion.Item eventKey="0" className="h-100 bg-dark m-0 ">
           <Accordion.Header
             onClick={() => {
               setIsCompletedTasksOpen(!isCompletedTasksOpen);
             }}
+            style={{ height: '52px' }}
           >
             Completed Tasks
           </Accordion.Header>

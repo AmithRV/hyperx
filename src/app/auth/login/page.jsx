@@ -109,7 +109,7 @@ function Login() {
               className="btn btn-primary mx-4 my-4 w-100"
               disabled={loading.state}
             >
-              {loading.state ? 'Loading' : 'Login'}
+              {loading.state ? 'Loading...' : 'Login'}
             </button>
           </div>
         </form>{' '}
