@@ -174,8 +174,11 @@ function TodoList() {
     setLoading(true);
     BulkTasksInsert(data)
       .then((tasks) => {
-        console.log('tasks : ', tasks);
-        // saveToLocalStorage('tasks', []);
+        const savedTasks = tasks.savedTasks;
+        setTaskList((prevArr) => [...prevArr, ...savedTasks]);
+
+        // Clear The offline Tasks in LS
+        saveToLocalStorage('tasks', []);
       })
       .catch(() => {
         toast.error('something went wrong');
@@ -245,6 +248,7 @@ function TodoList() {
       setShow({ isVisible: false, type: 'sync-data', data: {} });
     }
   }, [isOnline]);
+
   return (
     <>
       <Layout
