@@ -23,16 +23,16 @@ import {
 } from '@/lib/api-collection/todo-list';
 
 import '@/styles/todo-list/todo-list-body.css';
+import SyncData from './components/SyncData';
 
 function TodoList() {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-
   const [task, setTask] = useState('');
   const [taskList, setTaskList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState('');
   const [completedTasks, setCompletedTasks] = useState([]);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [isCompletedTasksOpen, setIsCompletedTasksOpen] = useState(false);
   const [show, setShow] = useState({ isVisible: false, type: '', data: {} });
 
@@ -219,8 +219,11 @@ function TodoList() {
 
     console.log('offlineTasks  : ', offlineTasks);
     if (isOnline && offlineTasks.length > 0) {
+      setShow({ isVisible: true, type: 'sync-data', data: {} });
       // api-for bulk upload
       // saveToLocalStorage('tasks',[]);
+    } else {
+      setShow({ isVisible: false, type: 'sync-data', data: {} });
     }
   }, [isOnline]);
   return (
@@ -280,6 +283,8 @@ function TodoList() {
         handleClose={handleClose}
         handleAddCategory={handleAddCategory}
       />
+
+      <SyncData show={show.isVisible && show.type === 'sync-data'} />
     </>
   );
 }
