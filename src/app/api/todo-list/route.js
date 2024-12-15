@@ -14,8 +14,6 @@ export async function POST(request) {
     const newTask = new Task({
       label,
       status,
-      createdAt: new Date(),
-      categoryId: process.env.GENERAL_CATEGORY_ID,
     });
 
     //

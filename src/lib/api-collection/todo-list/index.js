@@ -20,3 +20,7 @@ export function CreateTask(data) {
 export function ListTasks() {
   return handleGetMethod('/api/todo-list');
 }
+
+export function BulkTasksInsert(data) {
+  return handlePostMethod('/api/todo-list/bulk', data);
+}

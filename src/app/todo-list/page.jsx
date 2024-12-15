@@ -16,6 +16,7 @@ import AddTask from './components/AddTask';
 import Loading from './components/Loading';
 import Layout from './components/Layout';
 import {
+  BulkTasksInsert,
   CreateTask,
   DeleteTask,
   ListTasks,
@@ -166,6 +167,25 @@ function TodoList() {
     }
   };
 
+  const handleUploadOfflineTasks = () => {
+    const offlineTasks = getFromLocalStorage('tasks') || [];
+    const data = { tasks: offlineTasks };
+
+    setLoading(true);
+    BulkTasksInsert(data)
+      .then((tasks) => {
+        console.log('tasks : ', tasks);
+        // saveToLocalStorage('tasks', []);
+      })
+      .catch(() => {
+        toast.error('something went wrong');
+      })
+      .finally(() => {
+        setLoading(false);
+        setShow({ isVisible: false, type: '', data: {} });
+      });
+  };
+
   useEffect(() => {
     // Load todo-list -- start
     setLoading(true);
@@ -217,11 +237,10 @@ function TodoList() {
   useEffect(() => {
     const offlineTasks = getFromLocalStorage('tasks') || [];
 
-    console.log('offlineTasks  : ', offlineTasks);
     if (isOnline && offlineTasks.length > 0) {
+      console.log('offlineTasks  : ', offlineTasks);
+
       setShow({ isVisible: true, type: 'sync-data', data: {} });
-      // api-for bulk upload
-      // saveToLocalStorage('tasks',[]);
     } else {
       setShow({ isVisible: false, type: 'sync-data', data: {} });
     }
@@ -284,7 +303,11 @@ function TodoList() {
         handleAddCategory={handleAddCategory}
       />
 
-      <SyncData show={show.isVisible && show.type === 'sync-data'} />
+      <SyncData
+        show={show.isVisible && show.type === 'sync-data'}
+        loading={false}
+        handleUploadOfflineTasks={handleUploadOfflineTasks}
+      />
     </>
   );
 }
