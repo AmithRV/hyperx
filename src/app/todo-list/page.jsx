@@ -12,6 +12,7 @@ import {
   CreateCategory,
   ListCategories,
 } from '@/lib/api-collection/todo-list/categories';
+import SyncData from './components/SyncData';
 import AddTask from './components/AddTask';
 import Loading from './components/Loading';
 import Layout from './components/Layout';
@@ -24,7 +25,6 @@ import {
 } from '@/lib/api-collection/todo-list';
 
 import '@/styles/todo-list/todo-list-body.css';
-import SyncData from './components/SyncData';
 
 function TodoList() {
   const [task, setTask] = useState('');

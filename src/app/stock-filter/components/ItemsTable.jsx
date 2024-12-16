@@ -18,7 +18,7 @@ function ItemsTable({
 }) {
   return (
     <div className={`${isExpanded ? 'w-100' : 'w-75'} items-table`}>
-      <Stack direction="horizontal" className="my-4" gap={2}>
+      <Stack direction="horizontal" className="my-4 h-25" gap={2}>
         <div>
           {headers.map((header, index) => (
             <Badge

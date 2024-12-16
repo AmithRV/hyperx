@@ -10,6 +10,8 @@
 .table-items-wrap {
     overflow: scroll;
     scrollbar-width: none;
+    overflow: scroll;
+    height: 70%;
 }
 
 .table-items-wrap ::-webkit-scrollbar {
